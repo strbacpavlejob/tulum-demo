@@ -14,13 +14,21 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, Href } from 'expo-router';
 import { useUserStore } from '@/stores/userStore';
 import { Gender } from '@/types/User';
-import { ChevronRight } from 'lucide-react-native';
+import { ChevronRight, Circle } from 'lucide-react-native';
+import { Mars, Venus } from 'lucide-react-native';
 
-const GENDER_OPTIONS: { value: Gender; label: string }[] = [
-  { value: 'male', label: 'Male' },
-  { value: 'female', label: 'Female' },
-  { value: 'non-binary', label: 'Non-binary' },
-  { value: 'other', label: 'Other' },
+const GENDER_OPTIONS: {
+  value: Gender;
+  label: string;
+  icon: React.ReactNode;
+}[] = [
+  { value: 'male', label: 'Male', icon: <Mars size={20} color="#000" /> },
+  { value: 'female', label: 'Female', icon: <Venus size={20} color="#000" /> },
+  {
+    value: 'other',
+    label: 'Other',
+    icon: <Circle size={20} color="#000" />,
+  },
 ];
 
 export default function OnboardingStep1() {
@@ -138,6 +146,7 @@ export default function OnboardingStep1() {
                     ]}
                     onPress={() => setGender(option.value)}
                   >
+                    {option.icon}
                     <Text
                       style={[
                         styles.genderButtonText,
@@ -279,6 +288,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   genderButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 50,

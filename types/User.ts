@@ -1,5 +1,10 @@
 export type Gender = 'male' | 'female' | 'non-binary' | 'other';
-export type LookingFor = 'relationship' | 'casual' | 'friendship' | 'not-sure';
+export type LookingFor =
+  | 'relationship'
+  | 'casual'
+  | 'friendship'
+  | 'not-sure'
+  | 'party';
 
 export interface UserPreferences {
   minAge: number;

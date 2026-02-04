@@ -18,6 +18,7 @@ import {
   Coffee,
   Users,
   HelpCircle,
+  PartyPopper,
 } from 'lucide-react-native';
 
 const LOOKING_FOR_OPTIONS: {
@@ -30,25 +31,31 @@ const LOOKING_FOR_OPTIONS: {
     value: 'relationship',
     label: 'Relationship',
     description: 'Looking for something serious',
-    icon: <Heart size={32} color="#FF6B6B" />,
+    icon: <Heart size={32} color="#cebdff" />,
   },
   {
     value: 'casual',
     label: 'Casual',
     description: 'Open to see where things go',
-    icon: <Coffee size={32} color="#FF6B6B" />,
+    icon: <Coffee size={32} color="#cebdff" />,
   },
   {
     value: 'friendship',
     label: 'Friendship',
     description: 'Looking to make new friends',
-    icon: <Users size={32} color="#FF6B6B" />,
+    icon: <Users size={32} color="#cebdff" />,
   },
   {
     value: 'not-sure',
     label: 'Not Sure Yet',
     description: 'Still figuring things out',
-    icon: <HelpCircle size={32} color="#FF6B6B" />,
+    icon: <HelpCircle size={32} color="#cebdff" />,
+  },
+  {
+    value: 'party',
+    label: 'Party Animal',
+    description: 'Just want to have fun',
+    icon: <PartyPopper size={32} color="#cebdff" />,
   },
 ];
 

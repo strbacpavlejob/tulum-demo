@@ -11,13 +11,26 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, Href } from 'expo-router';
 import { useUserStore } from '@/stores/userStore';
 import { Gender } from '@/types/User';
-import { ChevronRight, ChevronLeft } from 'lucide-react-native';
+import {
+  ChevronRight,
+  ChevronLeft,
+  Mars,
+  Venus,
+  CircleDot,
+} from 'lucide-react-native';
 
-const GENDER_OPTIONS: { value: Gender; label: string }[] = [
-  { value: 'male', label: 'Men' },
-  { value: 'female', label: 'Women' },
-  { value: 'non-binary', label: 'Non-binary' },
-  { value: 'other', label: 'Everyone' },
+const GENDER_OPTIONS: {
+  value: Gender;
+  label: string;
+  icon: React.ReactNode;
+}[] = [
+  { value: 'male', label: 'Men', icon: <Mars size={20} color="#000" /> },
+  { value: 'female', label: 'Women', icon: <Venus size={20} color="#000" /> },
+  {
+    value: 'other',
+    label: 'Other',
+    icon: <CircleDot size={20} color="#000" />,
+  },
 ];
 
 export default function OnboardingStep4() {
@@ -30,25 +43,13 @@ export default function OnboardingStep4() {
   );
   const [minAge, setMinAge] = useState(onboardingData.preferences.minAge);
   const [maxAge, setMaxAge] = useState(onboardingData.preferences.maxAge);
-  const [maxDistance, setMaxDistance] = useState(
-    onboardingData.preferences.maxDistance,
-  );
 
   const toggleGenderPreference = (gender: Gender) => {
-    if (gender === 'other') {
-      // "Everyone" toggles all options
-      if (genderPreference.length === GENDER_OPTIONS.length) {
-        setGenderPreference([]);
-      } else {
-        setGenderPreference(GENDER_OPTIONS.map((g) => g.value));
-      }
-    } else {
-      setGenderPreference((prev) =>
-        prev.includes(gender)
-          ? prev.filter((g) => g !== gender)
-          : [...prev, gender],
-      );
-    }
+    setGenderPreference((prev) =>
+      prev.includes(gender)
+        ? prev.filter((g) => g !== gender)
+        : [...prev, gender],
+    );
   };
 
   const adjustAge = (type: 'min' | 'max', direction: 'up' | 'down') => {
@@ -65,15 +66,6 @@ export default function OnboardingStep4() {
     }
   };
 
-  const adjustDistance = (direction: 'up' | 'down') => {
-    const step = 5;
-    const newValue =
-      direction === 'up' ? maxDistance + step : maxDistance - step;
-    if (newValue >= 5 && newValue <= 100) {
-      setMaxDistance(newValue);
-    }
-  };
-
   const handleNext = () => {
     updateOnboardingData({
       preferences: {
@@ -81,7 +73,6 @@ export default function OnboardingStep4() {
         genderPreference,
         minAge,
         maxAge,
-        maxDistance,
       },
     });
     setOnboardingStep(5);
@@ -153,6 +144,7 @@ export default function OnboardingStep4() {
                   ]}
                   onPress={() => toggleGenderPreference(option.value)}
                 >
+                  {option.icon}
                   <Text
                     style={[
                       styles.genderButtonText,
@@ -209,28 +201,6 @@ export default function OnboardingStep4() {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
-          </View>
-
-          <View style={styles.section}>
-            <Text style={styles.sectionLabel}>Maximum distance</Text>
-            <View style={styles.distanceContainer}>
-              <TouchableOpacity
-                style={styles.stepperButton}
-                onPress={() => adjustDistance('down')}
-              >
-                <Text style={styles.stepperButtonText}>−</Text>
-              </TouchableOpacity>
-              <View style={styles.distanceValue}>
-                <Text style={styles.distanceNumber}>{maxDistance}</Text>
-                <Text style={styles.distanceUnit}>km</Text>
-              </View>
-              <TouchableOpacity
-                style={styles.stepperButton}
-                onPress={() => adjustDistance('up')}
-              >
-                <Text style={styles.stepperButtonText}>+</Text>
-              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -348,6 +318,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   genderButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 50,
