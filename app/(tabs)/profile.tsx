@@ -108,12 +108,12 @@ export default function ProfileScreen() {
           <View style={styles.photosSection}>
             <Text style={styles.photosTitle}>My Photos</Text>
             <View style={styles.photosGrid}>
-              {photos.slice(1).map((photo, index) => (
+              {photos.slice(1, 3).map((photo, index) => (
                 <View key={index} style={styles.photoSlot}>
                   <Image source={{ uri: photo }} style={styles.gridPhoto} />
                 </View>
               ))}
-              {Array.from({ length: Math.max(0, 3 - (photos.length - 1)) }).map(
+              {Array.from({ length: Math.max(0, 2 - (photos.length - 1)) }).map(
                 (_, index) => (
                   <TouchableOpacity
                     key={`empty-${index}`}

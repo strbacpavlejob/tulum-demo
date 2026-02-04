@@ -22,7 +22,7 @@ import {
   Plus,
 } from 'lucide-react-native';
 
-const MAX_PHOTOS = 6;
+const MAX_PHOTOS = 3;
 
 export default function OnboardingStep2() {
   const router = useRouter();
