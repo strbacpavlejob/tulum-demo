@@ -13,12 +13,30 @@ import {
   Settings,
   CreditCard as Edit3,
   Camera,
-  MapPin,
-  Briefcase,
-  GraduationCap,
+  Heart,
+  Sparkles,
 } from 'lucide-react-native';
+import { useUserStore } from '@/stores/userStore';
+
+const LOOKING_FOR_LABELS: Record<string, string> = {
+  relationship: 'Relationship',
+  casual: 'Casual',
+  friendship: 'Friendship',
+  'not-sure': 'Not Sure Yet',
+  party: 'Party Animal',
+};
 
 export default function ProfileScreen() {
+  const { profile, onboardingData } = useUserStore();
+
+  // Use profile if available, otherwise fall back to onboardingData
+  const name = profile?.name || onboardingData.name || 'Your Name';
+  const age = profile?.age || onboardingData.age || 18;
+  const photos = profile?.photos || onboardingData.photos || [];
+  const lookingFor = profile?.lookingFor || onboardingData.lookingFor;
+  const hobbies = profile?.hobbies || onboardingData.hobbies || [];
+  const bio = profile?.bio || '';
+
   return (
     <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
@@ -30,73 +48,81 @@ export default function ProfileScreen() {
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           <View style={styles.profileHeader}>
             <View style={styles.imageContainer}>
-              <Image
-                source={{
-                  uri: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
-                }}
-                style={styles.profileImage}
-              />
+              {photos.length > 0 ? (
+                <Image
+                  source={{ uri: photos[0] }}
+                  style={styles.profileImage}
+                />
+              ) : (
+                <View style={[styles.profileImage, styles.placeholderImage]}>
+                  <Camera size={40} color="#999" />
+                </View>
+              )}
               <TouchableOpacity style={styles.cameraButton}>
                 <Camera size={16} color="#000" />
               </TouchableOpacity>
             </View>
-            <Text style={styles.name}>Sarah Johnson</Text>
-            <Text style={styles.age}>28 years old</Text>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.age}>{age} years old</Text>
             <TouchableOpacity style={styles.editButton}>
               <Edit3 size={16} color="#000" />
               <Text style={styles.editText}>Edit Profile</Text>
             </TouchableOpacity>
           </View>
 
-          <View style={styles.infoSection}>
-            <View style={styles.infoCard}>
-              <MapPin size={20} color="#000" />
-              <View style={styles.infoContent}>
-                <Text style={styles.infoTitle}>Location</Text>
-                <Text style={styles.infoValue}>San Francisco, CA</Text>
+          {lookingFor && (
+            <View style={styles.infoSection}>
+              <View style={styles.infoCard}>
+                <Heart size={20} color="#000" />
+                <View style={styles.infoContent}>
+                  <Text style={styles.infoTitle}>Looking For</Text>
+                  <Text style={styles.infoValue}>
+                    {LOOKING_FOR_LABELS[lookingFor] || lookingFor}
+                  </Text>
+                </View>
               </View>
             </View>
+          )}
 
-            <View style={styles.infoCard}>
-              <Briefcase size={20} color="#000" />
-              <View style={styles.infoContent}>
-                <Text style={styles.infoTitle}>Job</Text>
-                <Text style={styles.infoValue}>
-                  Product Designer at Tech Co
-                </Text>
+          {bio ? (
+            <View style={styles.bioSection}>
+              <Text style={styles.bioTitle}>About Me</Text>
+              <Text style={styles.bioText}>{bio}</Text>
+            </View>
+          ) : null}
+
+          {hobbies.length > 0 && (
+            <View style={styles.hobbiesSection}>
+              <Text style={styles.hobbiesTitle}>My Interests</Text>
+              <View style={styles.hobbiesContainer}>
+                {hobbies.map((hobby, index) => (
+                  <View key={index} style={styles.hobbyChip}>
+                    <Sparkles size={14} color="#000" />
+                    <Text style={styles.hobbyText}>{hobby}</Text>
+                  </View>
+                ))}
               </View>
             </View>
-
-            <View style={styles.infoCard}>
-              <GraduationCap size={20} color="#000" />
-              <View style={styles.infoContent}>
-                <Text style={styles.infoTitle}>Education</Text>
-                <Text style={styles.infoValue}>Stanford University</Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.bioSection}>
-            <Text style={styles.bioTitle}>About Me</Text>
-            <Text style={styles.bioText}>
-              Love hiking, photography, and good coffee ☕ Looking for someone
-              to explore the city with! Always up for trying new restaurants and
-              weekend adventures. Let's create some amazing memories together!
-            </Text>
-          </View>
+          )}
 
           <View style={styles.photosSection}>
             <Text style={styles.photosTitle}>My Photos</Text>
             <View style={styles.photosGrid}>
-              <TouchableOpacity style={styles.photoSlot}>
-                <Text style={styles.addPhotoText}>+</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.photoSlot}>
-                <Text style={styles.addPhotoText}>+</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.photoSlot}>
-                <Text style={styles.addPhotoText}>+</Text>
-              </TouchableOpacity>
+              {photos.slice(1).map((photo, index) => (
+                <View key={index} style={styles.photoSlot}>
+                  <Image source={{ uri: photo }} style={styles.gridPhoto} />
+                </View>
+              ))}
+              {Array.from({ length: Math.max(0, 3 - (photos.length - 1)) }).map(
+                (_, index) => (
+                  <TouchableOpacity
+                    key={`empty-${index}`}
+                    style={styles.photoSlot}
+                  >
+                    <Text style={styles.addPhotoText}>+</Text>
+                  </TouchableOpacity>
+                ),
+              )}
             </View>
           </View>
         </ScrollView>
@@ -276,10 +302,57 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 0,
     elevation: 4,
+    overflow: 'hidden',
+  },
+  gridPhoto: {
+    width: '100%',
+    height: '100%',
   },
   addPhotoText: {
     fontSize: 32,
     color: '#000',
     fontWeight: '900',
+  },
+  placeholderImage: {
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  hobbiesSection: {
+    paddingHorizontal: 20,
+    marginBottom: 30,
+  },
+  hobbiesTitle: {
+    fontSize: 18,
+    fontWeight: '900',
+    color: '#000',
+    marginBottom: 16,
+    textTransform: 'uppercase',
+  },
+  hobbiesContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  hobbyChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    backgroundColor: '#FFF9C4',
+    borderRadius: 50,
+    borderWidth: 3,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 3,
+  },
+  hobbyText: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#000',
   },
 });
