@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   rewindButton: {
     width: 56,
     height: 56,
-    backgroundColor: '#cebdff',
+    backgroundColor: '#FFF9C4',
   },
   passButton: {
     width: 64,

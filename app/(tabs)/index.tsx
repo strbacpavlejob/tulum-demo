@@ -133,8 +133,8 @@ export default function DiscoverScreen() {
       <SafeAreaView style={styles.safeArea}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.logo}>tinder</Text>
-          <Settings size={24} color="#000" />
+          <Text style={styles.logo}>Tulum</Text>
+          <Settings size={24} color="#020202" />
         </View>
 
         {/* Card Stack */}

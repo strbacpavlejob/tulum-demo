@@ -104,7 +104,7 @@ export default function AuthScreen() {
               <Heart size={48} color="#000" fill="#000" />
             </View>
             <Text style={styles.appName}>Tulum</Text>
-            <Text style={styles.tagline}>Find your perfect match</Text>
+            <Text style={styles.tagline}>right time, right place</Text>
           </View>
 
           <View style={styles.formContainer}>
@@ -266,12 +266,9 @@ const styles = StyleSheet.create({
   },
   tagline: {
     fontSize: 16,
-    fontWeight: '700',
-    color: '#fff',
+    fontWeight: '900',
+    color: '#000',
     marginTop: 8,
-    textShadowColor: '#000',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 0,
   },
   formContainer: {
     backgroundColor: '#fff',
