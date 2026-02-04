@@ -1,0 +1,68 @@
+import { Profile } from '@/types/Profile';
+
+export const mockProfiles: Profile[] = [
+  {
+    id: '1',
+    name: 'Sarah',
+    age: 28,
+    bio: 'Love hiking, photography, and good coffee ☕ Looking for someone to explore the city with!',
+    images: ['https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    distance: 3,
+  },
+  {
+    id: '2',
+    name: 'Emma',
+    age: 25,
+    bio: 'Artist and yoga instructor 🎨🧘‍♀️ Seeking genuine connections and deep conversations.',
+    images: ['https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    distance: 5,
+  },
+  {
+    id: '3',
+    name: 'Jessica',
+    age: 30,
+    bio: 'Foodie, traveler, dog mom 🐕 Always up for trying new restaurants and adventures!',
+    images: ['https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    distance: 2,
+  },
+  {
+    id: '4',
+    name: 'Olivia',
+    age: 26,
+    bio: 'Marketing professional by day, salsa dancer by night 💃 Looking for my dance partner in life.',
+    images: ['https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    distance: 4,
+  },
+  {
+    id: '5',
+    name: 'Sophia',
+    age: 29,
+    bio: 'Book lover, wine enthusiast, weekend warrior 📚🍷 Seeking someone who shares my passions.',
+    images: ['https://images.pexels.com/photos/1102341/pexels-photo-1102341.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    distance: 6,
+  },
+  {
+    id: '6',
+    name: 'Isabella',
+    age: 27,
+    bio: 'Fitness enthusiast and beach lover 🏖️ Let\'s work out together and catch sunsets!',
+    images: ['https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    distance: 7,
+  },
+  {
+    id: '7',
+    name: 'Ava',
+    age: 24,
+    bio: 'Student, musician, dreamer 🎵 Looking for someone who appreciates the arts and good music.',
+    images: ['https://images.pexels.com/photos/1144176/pexels-photo-1144176.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    distance: 1,
+  },
+  {
+    id: '8',
+    name: 'Mia',
+    age: 31,
+    bio: 'Chef and nature enthusiast 👩‍🍳🌲 I love cooking for others and exploring the outdoors.',
+    images: ['https://images.pexels.com/photos/1310522/pexels-photo-1310522.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    distance: 8,
+  },
+];
