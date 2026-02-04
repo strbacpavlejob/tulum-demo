@@ -8,6 +8,7 @@ import {
   Image,
   Alert,
   Platform,
+  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, Href } from 'expo-router';
@@ -127,11 +128,41 @@ export default function OnboardingStep2() {
 
   const isFormValid = photos.length >= 1;
 
+  const GridBackground = () => {
+    const { width, height } = Dimensions.get('window');
+    const gridSize = 30;
+    const horizontalLines = Math.ceil(height / gridSize);
+    const verticalLines = Math.ceil(width / gridSize);
+
+    return (
+      <View style={styles.gridContainer}>
+        {Array.from({ length: horizontalLines }).map((_, i) => (
+          <View
+            key={`h-${i}`}
+            style={[
+              styles.gridLine,
+              styles.horizontalLine,
+              { top: i * gridSize },
+            ]}
+          />
+        ))}
+        {Array.from({ length: verticalLines }).map((_, i) => (
+          <View
+            key={`v-${i}`}
+            style={[
+              styles.gridLine,
+              styles.verticalLine,
+              { left: i * gridSize },
+            ]}
+          />
+        ))}
+      </View>
+    );
+  };
+
   return (
-    <LinearGradient
-      colors={['#FF6B6B', '#FF8E8E', '#FFB4B4']}
-      style={styles.container}
-    >
+    <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
+      <GridBackground />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -166,7 +197,7 @@ export default function OnboardingStep2() {
                   onPress={showImageOptions}
                 >
                   {index === 0 ? (
-                    <Camera size={32} color="#FF6B6B" />
+                    <Camera size={32} color="#000" />
                   ) : (
                     <Plus size={32} color="#CCC" />
                   )}
@@ -182,7 +213,7 @@ export default function OnboardingStep2() {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-            <ChevronLeft size={24} color="#FF6B6B" />
+            <ChevronLeft size={24} color="#000" />
             <Text style={styles.backButtonText}>Back</Text>
           </TouchableOpacity>
 
@@ -195,7 +226,7 @@ export default function OnboardingStep2() {
             disabled={!isFormValid}
           >
             <Text style={styles.nextButtonText}>Continue</Text>
-            <ChevronRight size={24} color="#fff" />
+            <ChevronRight size={24} color="#000" />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -207,6 +238,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  gridContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflow: 'hidden',
+  },
+  gridLine: {
+    position: 'absolute',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  horizontalLine: {
+    left: 0,
+    right: 0,
+    height: 1,
+  },
+  verticalLine: {
+    top: 0,
+    bottom: 0,
+    width: 1,
+  },
   scrollContent: {
     flexGrow: 1,
     padding: 24,
@@ -217,18 +270,30 @@ const styles = StyleSheet.create({
   },
   stepIndicator: {
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.8)',
+    fontWeight: '800',
+    color: '#fff',
     marginBottom: 8,
+    textTransform: 'uppercase',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 0,
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#fff',
     marginBottom: 8,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 0,
   },
   subtitle: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.9)',
+    fontWeight: '700',
+    color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 0,
   },
   photoGrid: {
     flexDirection: 'row',
@@ -243,8 +308,10 @@ const styles = StyleSheet.create({
   },
   photoContainer: {
     flex: 1,
-    borderRadius: 12,
+    borderRadius: 0,
     overflow: 'hidden',
+    borderWidth: 3,
+    borderColor: '#000',
   },
   photo: {
     width: '100%',
@@ -257,40 +324,53 @@ const styles = StyleSheet.create({
     right: 8,
     width: 28,
     height: 28,
-    borderRadius: 14,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    borderRadius: 0,
+    backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#fff',
   },
   mainBadge: {
     position: 'absolute',
     bottom: 8,
     left: 8,
-    backgroundColor: '#FF6B6B',
+    backgroundColor: '#FFF9C4',
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 8,
+    borderRadius: 0,
+    borderWidth: 2,
+    borderColor: '#000',
   },
   mainBadgeText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 10,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    textTransform: 'uppercase',
   },
   addPhotoButton: {
     flex: 1,
     backgroundColor: '#fff',
-    borderRadius: 12,
+    borderRadius: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#EEE',
-    borderStyle: 'dashed',
+    borderWidth: 3,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   hint: {
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.9)',
+    fontWeight: '700',
+    color: '#fff',
     textAlign: 'center',
     marginBottom: 24,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 0,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -299,34 +379,51 @@ const styles = StyleSheet.create({
   backButton: {
     flex: 1,
     backgroundColor: '#fff',
-    borderRadius: 16,
+    borderRadius: 0,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
+    borderWidth: 3,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   backButtonText: {
-    color: '#FF6B6B',
+    color: '#000',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    textTransform: 'uppercase',
   },
   nextButton: {
     flex: 2,
-    backgroundColor: '#333',
-    borderRadius: 16,
+    backgroundColor: '#FFF9C4',
+    borderRadius: 0,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
+    borderWidth: 3,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   nextButtonDisabled: {
     opacity: 0.6,
+    shadowOffset: { width: 2, height: 2 },
   },
   nextButtonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    textTransform: 'uppercase',
   },
 });

@@ -58,7 +58,7 @@ export default function RootLayout() {
   if (status === 'idle') {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#FF6B6B" />
+        <ActivityIndicator size="large" color="#cebdff" />
       </View>
     );
   }

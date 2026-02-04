@@ -6,24 +6,28 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#FF4458',
-        tabBarInactiveTintColor: '#999',
+        tabBarActiveTintColor: '#000',
+        tabBarInactiveTintColor: '#666',
+        tabBarLabelStyle: {
+          fontWeight: '800',
+          textTransform: 'uppercase',
+          fontSize: 10,
+        },
         tabBarStyle: {
-          backgroundColor: '#fff',
-          borderTopWidth: 1,
-          borderTopColor: '#f0f0f0',
+          backgroundColor: '#FFF9C4',
+          borderTopWidth: 3,
+          borderTopColor: '#000',
           paddingTop: 8,
           paddingBottom: 8,
-          height: 60,
+          height: 65,
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Discover',
-          tabBarIcon: ({ size, color }) => (
-            <Flame size={size} color={color} />
-          ),
+          tabBarIcon: ({ size, color }) => <Flame size={size} color={color} />,
         }}
       />
       <Tabs.Screen
@@ -39,9 +43,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ size, color }) => (
-            <User size={size} color={color} />
-          ),
+          tabBarIcon: ({ size, color }) => <User size={size} color={color} />,
         }}
       />
     </Tabs>

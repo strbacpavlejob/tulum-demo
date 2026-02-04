@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  Platform,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, {
   useSharedValue,
@@ -10,7 +17,10 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
 import { Profile } from '@/types/Profile';
 import { MapPin } from 'lucide-react-native';
@@ -46,51 +56,52 @@ export default function SwipeCard({
     }
   };
 
-  const gestureHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-    onStart: () => {
-      runOnJS(triggerHaptic)();
-    },
-    onActive: (event) => {
-      translateX.value = event.translationX;
-      translateY.value = event.translationY;
-      rotateZ.value = interpolate(
-        event.translationX,
-        [-screenWidth, 0, screenWidth],
-        [-30, 0, 30]
-      );
-      
-      // Scale effect for feedback
-      const progress = Math.abs(event.translationX) / SWIPE_THRESHOLD;
-      scale.value = interpolate(progress, [0, 1], [1, 0.95]);
-    },
-    onEnd: (event) => {
-      const shouldSwipeRight = event.translationX > SWIPE_THRESHOLD;
-      const shouldSwipeLeft = event.translationX < -SWIPE_THRESHOLD;
+  const gestureHandler =
+    useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
+      onStart: () => {
+        runOnJS(triggerHaptic)();
+      },
+      onActive: (event) => {
+        translateX.value = event.translationX;
+        translateY.value = event.translationY;
+        rotateZ.value = interpolate(
+          event.translationX,
+          [-screenWidth, 0, screenWidth],
+          [-30, 0, 30],
+        );
 
-      if (shouldSwipeRight) {
-        translateX.value = withTiming(screenWidth * 1.5);
-        rotateZ.value = withTiming(30);
-        runOnJS(onSwipeRight)(profile);
-        runOnJS(triggerHaptic)();
-      } else if (shouldSwipeLeft) {
-        translateX.value = withTiming(-screenWidth * 1.5);
-        rotateZ.value = withTiming(-30);
-        runOnJS(onSwipeLeft)(profile);
-        runOnJS(triggerHaptic)();
-      } else {
-        translateX.value = withSpring(0);
-        translateY.value = withSpring(0);
-        rotateZ.value = withSpring(0);
-        scale.value = withSpring(1);
-      }
-    },
-  });
+        // Scale effect for feedback
+        const progress = Math.abs(event.translationX) / SWIPE_THRESHOLD;
+        scale.value = interpolate(progress, [0, 1], [1, 0.95]);
+      },
+      onEnd: (event) => {
+        const shouldSwipeRight = event.translationX > SWIPE_THRESHOLD;
+        const shouldSwipeLeft = event.translationX < -SWIPE_THRESHOLD;
+
+        if (shouldSwipeRight) {
+          translateX.value = withTiming(screenWidth * 1.5);
+          rotateZ.value = withTiming(30);
+          runOnJS(onSwipeRight)(profile);
+          runOnJS(triggerHaptic)();
+        } else if (shouldSwipeLeft) {
+          translateX.value = withTiming(-screenWidth * 1.5);
+          rotateZ.value = withTiming(-30);
+          runOnJS(onSwipeLeft)(profile);
+          runOnJS(triggerHaptic)();
+        } else {
+          translateX.value = withSpring(0);
+          translateY.value = withSpring(0);
+          rotateZ.value = withSpring(0);
+          scale.value = withSpring(1);
+        }
+      },
+    });
 
   const cardStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
       Math.abs(translateX.value),
       [0, SWIPE_THRESHOLD],
-      [1, 0.8]
+      [1, 0.8],
     );
 
     return {
@@ -113,14 +124,11 @@ export default function SwipeCard({
   }));
 
   const cardScaleStyle = useAnimatedStyle(() => {
-    const baseScale = 0.95 - (index * 0.05);
+    const baseScale = 0.95 - index * 0.05;
     const yOffset = index * 10;
-    
+
     return {
-      transform: [
-        { scale: baseScale },
-        { translateY: yOffset },
-      ],
+      transform: [{ scale: baseScale }, { translateY: yOffset }],
       zIndex: totalCards - index,
     };
   });
@@ -128,14 +136,16 @@ export default function SwipeCard({
   return (
     <View style={styles.cardContainer}>
       <PanGestureHandler onGestureEvent={gestureHandler}>
-        <Animated.View style={[styles.card, cardStyle, index > 0 && cardScaleStyle]}>
+        <Animated.View
+          style={[styles.card, cardStyle, index > 0 && cardScaleStyle]}
+        >
           <Image source={{ uri: profile.images[0] }} style={styles.image} />
-          
+
           {/* Swipe Indicators */}
           <Animated.View style={[styles.likeIndicator, likeOpacity]}>
             <Text style={styles.likeText}>LIKE</Text>
           </Animated.View>
-          
+
           <Animated.View style={[styles.passIndicator, passOpacity]}>
             <Text style={styles.passText}>PASS</Text>
           </Animated.View>
@@ -150,14 +160,16 @@ export default function SwipeCard({
                 <Text style={styles.name}>{profile.name}</Text>
                 <Text style={styles.age}>, {profile.age}</Text>
               </View>
-              
+
               {profile.distance && (
                 <View style={styles.distanceRow}>
                   <MapPin size={16} color="#fff" />
-                  <Text style={styles.distance}>{profile.distance} km away</Text>
+                  <Text style={styles.distance}>
+                    {profile.distance} km away
+                  </Text>
                 </View>
               )}
-              
+
               <Text style={styles.bio} numberOfLines={3}>
                 {profile.bio}
               </Text>
@@ -177,15 +189,17 @@ const styles = StyleSheet.create({
   card: {
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
-    borderRadius: 16,
+    borderRadius: 0,
     backgroundColor: '#fff',
+    borderWidth: 4,
+    borderColor: '#000',
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 8,
+      height: 8,
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
+    shadowOpacity: 1,
+    shadowRadius: 0,
     elevation: 8,
     overflow: 'hidden',
   },
@@ -212,13 +226,19 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 0,
   },
   age: {
     fontSize: 28,
-    fontWeight: '300',
+    fontWeight: '700',
     color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 0,
   },
   distanceRow: {
     flexDirection: 'row',
@@ -227,15 +247,21 @@ const styles = StyleSheet.create({
   },
   distance: {
     fontSize: 16,
+    fontWeight: '700',
     color: '#fff',
     marginLeft: 4,
-    opacity: 0.9,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 0,
   },
   bio: {
     fontSize: 16,
+    fontWeight: '600',
     color: '#fff',
     lineHeight: 22,
-    opacity: 0.9,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 0,
   },
   likeIndicator: {
     position: 'absolute',
@@ -244,15 +270,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#4ECDC4',
     paddingHorizontal: 12,
     paddingVertical: 6,
-    borderRadius: 8,
+    borderRadius: 0,
     borderWidth: 3,
-    borderColor: '#fff',
+    borderColor: '#000',
     zIndex: 1,
   },
   likeText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    textTransform: 'uppercase',
   },
   passIndicator: {
     position: 'absolute',
@@ -261,14 +288,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF6B6B',
     paddingHorizontal: 12,
     paddingVertical: 6,
-    borderRadius: 8,
+    borderRadius: 0,
     borderWidth: 3,
-    borderColor: '#fff',
+    borderColor: '#000',
     zIndex: 1,
   },
   passText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    textTransform: 'uppercase',
   },
 });

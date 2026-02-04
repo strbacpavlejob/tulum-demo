@@ -9,6 +9,7 @@ import {
   Platform,
   ActivityIndicator,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Heart } from 'lucide-react-native';
@@ -55,11 +56,41 @@ export default function AuthScreen() {
     ? email.length > 0 && password.length >= 6
     : email.length > 0 && password.length >= 6 && password === confirmPassword;
 
+  const GridBackground = () => {
+    const { width, height } = Dimensions.get('window');
+    const gridSize = 30;
+    const horizontalLines = Math.ceil(height / gridSize);
+    const verticalLines = Math.ceil(width / gridSize);
+
+    return (
+      <View style={styles.gridContainer}>
+        {Array.from({ length: horizontalLines }).map((_, i) => (
+          <View
+            key={`h-${i}`}
+            style={[
+              styles.gridLine,
+              styles.horizontalLine,
+              { top: i * gridSize },
+            ]}
+          />
+        ))}
+        {Array.from({ length: verticalLines }).map((_, i) => (
+          <View
+            key={`v-${i}`}
+            style={[
+              styles.gridLine,
+              styles.verticalLine,
+              { left: i * gridSize },
+            ]}
+          />
+        ))}
+      </View>
+    );
+  };
+
   return (
-    <LinearGradient
-      colors={['#FF6B6B', '#FF8E8E', '#FFB4B4']}
-      style={styles.container}
-    >
+    <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
+      <GridBackground />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
@@ -70,7 +101,7 @@ export default function AuthScreen() {
         >
           <View style={styles.logoContainer}>
             <View style={styles.logoCircle}>
-              <Heart size={48} color="#FF6B6B" fill="#FF6B6B" />
+              <Heart size={48} color="#000" fill="#000" />
             </View>
             <Text style={styles.appName}>Tulum</Text>
             <Text style={styles.tagline}>Find your perfect match</Text>
@@ -173,6 +204,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  gridContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflow: 'hidden',
+  },
+  gridLine: {
+    position: 'absolute',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  horizontalLine: {
+    left: 0,
+    right: 0,
+    height: 1,
+  },
+  verticalLine: {
+    top: 0,
+    bottom: 0,
+    width: 1,
+  },
   keyboardView: {
     flex: 1,
   },
@@ -188,100 +241,133 @@ const styles = StyleSheet.create({
   logoCircle: {
     width: 100,
     height: 100,
-    borderRadius: 50,
+    borderRadius: 12,
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 3,
+    borderColor: '#000',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
     elevation: 8,
   },
   appName: {
-    fontSize: 36,
-    fontWeight: 'bold',
+    fontSize: 42,
+    fontWeight: '900',
     color: '#fff',
     marginTop: 16,
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 0,
   },
   tagline: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.9)',
+    fontWeight: '700',
+    color: '#fff',
     marginTop: 8,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 0,
   },
   formContainer: {
     backgroundColor: '#fff',
-    borderRadius: 24,
+    borderRadius: 0,
     padding: 24,
+    borderWidth: 3,
+    borderColor: '#000',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
+    shadowOffset: { width: 6, height: 6 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
     elevation: 8,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 28,
+    fontWeight: '900',
+    color: '#000',
     textAlign: 'center',
     marginBottom: 24,
+    textTransform: 'uppercase',
   },
   errorContainer: {
-    backgroundColor: '#FFE5E5',
+    backgroundColor: '#cebdff',
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 0,
     marginBottom: 16,
+    borderWidth: 3,
+    borderColor: '#000',
   },
   errorText: {
-    color: '#FF4444',
+    color: '#fff',
     textAlign: 'center',
     fontSize: 14,
+    fontWeight: '700',
   },
   inputContainer: {
     marginBottom: 16,
   },
   label: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
+    fontWeight: '800',
+    color: '#000',
     marginBottom: 8,
+    textTransform: 'uppercase',
   },
   input: {
-    backgroundColor: '#F5F5F5',
-    borderRadius: 12,
+    backgroundColor: '#FFF9C4',
+    borderRadius: 0,
     padding: 16,
     fontSize: 16,
-    color: '#333',
-    borderWidth: 2,
-    borderColor: 'transparent',
+    color: '#000',
+    borderWidth: 3,
+    borderColor: '#000',
+    fontWeight: '600',
   },
   inputError: {
     borderColor: '#FF4444',
+    backgroundColor: '#FFE5E5',
   },
   fieldError: {
     color: '#FF4444',
     fontSize: 12,
     marginTop: 4,
+    fontWeight: '700',
   },
   submitButton: {
-    backgroundColor: '#FF6B6B',
-    borderRadius: 12,
+    backgroundColor: '#cebdff',
+    borderRadius: 0,
     padding: 16,
     alignItems: 'center',
     marginTop: 8,
     marginBottom: 16,
+    borderWidth: 3,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   submitButtonDisabled: {
     backgroundColor: '#CCCCCC',
+    shadowOffset: { width: 2, height: 2 },
   },
   submitButtonText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
   toggleText: {
-    color: '#FF6B6B',
+    color: '#000',
     textAlign: 'center',
     fontSize: 14,
+    fontWeight: '700',
+    textDecorationLine: 'underline',
   },
 });

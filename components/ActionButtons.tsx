@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { X, Heart, RotateCcw, Star } from 'lucide-react-native';
 
@@ -11,7 +10,12 @@ interface ActionButtonsProps {
   onRewind: () => void;
 }
 
-export default function ActionButtons({ onPass, onLike, onSuperLike, onRewind }: ActionButtonsProps) {
+export default function ActionButtons({
+  onPass,
+  onLike,
+  onSuperLike,
+  onRewind,
+}: ActionButtonsProps) {
   const triggerHaptic = () => {
     if (Platform.OS !== 'web') {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -30,7 +34,7 @@ export default function ActionButtons({ onPass, onLike, onSuperLike, onRewind }:
         onPress={() => handlePress(onRewind)}
         activeOpacity={0.8}
       >
-        <RotateCcw size={24} color="#FFC107" />
+        <RotateCcw size={24} color="#000" />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -38,7 +42,7 @@ export default function ActionButtons({ onPass, onLike, onSuperLike, onRewind }:
         onPress={() => handlePress(onPass)}
         activeOpacity={0.8}
       >
-        <X size={30} color="#FF4458" />
+        <X size={30} color="#000" />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -46,12 +50,7 @@ export default function ActionButtons({ onPass, onLike, onSuperLike, onRewind }:
         onPress={() => handlePress(onSuperLike)}
         activeOpacity={0.8}
       >
-        <LinearGradient
-          colors={['#4FC3F7', '#29B6F6']}
-          style={styles.gradientButton}
-        >
-          <Star size={24} color="#fff" fill="#fff" />
-        </LinearGradient>
+        <Star size={24} color="#000" fill="#000" />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -59,7 +58,7 @@ export default function ActionButtons({ onPass, onLike, onSuperLike, onRewind }:
         onPress={() => handlePress(onLike)}
         activeOpacity={0.8}
       >
-        <Heart size={30} color="#4ECDC4" fill="#4ECDC4" />
+        <Heart size={30} color="#000" fill="#000" />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -67,14 +66,9 @@ export default function ActionButtons({ onPass, onLike, onSuperLike, onRewind }:
         onPress={() => handlePress(() => {})}
         activeOpacity={0.8}
       >
-        <LinearGradient
-          colors={['#AB47BC', '#8E24AA']}
-          style={styles.gradientButton}
-        >
-          <View style={styles.lightning}>
-            <View style={styles.lightningBolt} />
-          </View>
-        </LinearGradient>
+        <View style={styles.lightning}>
+          <View style={styles.lightningBolt} />
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -92,44 +86,47 @@ const styles = StyleSheet.create({
   button: {
     width: 56,
     height: 56,
-    borderRadius: 28,
+    borderRadius: 0,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+    borderWidth: 3,
+    borderColor: '#000',
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
-      height: 2,
+      width: 4,
+      height: 4,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   rewindButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 48,
+    height: 48,
+    backgroundColor: '#FFF9C4',
   },
   passButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 64,
+    height: 64,
+    backgroundColor: '#FF6B6B',
   },
   superLikeButton: {
     padding: 0,
     overflow: 'hidden',
+    backgroundColor: '#4FC3F7',
   },
   likeButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 64,
+    height: 64,
+    backgroundColor: '#4ECDC4',
   },
   boostButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 48,
+    height: 48,
     padding: 0,
     overflow: 'hidden',
+    backgroundColor: '#AB47BC',
   },
   gradientButton: {
     width: '100%',

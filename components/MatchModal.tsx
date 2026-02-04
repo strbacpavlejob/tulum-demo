@@ -1,5 +1,13 @@
 import React, { useEffect } from 'react';
-import { View, Text, Modal, StyleSheet, Image, TouchableOpacity, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  Modal,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, {
   useSharedValue,
@@ -18,7 +26,11 @@ interface MatchModalProps {
   onClose: () => void;
 }
 
-export default function MatchModal({ visible, profile, onClose }: MatchModalProps) {
+export default function MatchModal({
+  visible,
+  profile,
+  onClose,
+}: MatchModalProps) {
   const scale = useSharedValue(0);
   const heartScale = useSharedValue(0);
   const opacity = useSharedValue(0);
@@ -28,18 +40,12 @@ export default function MatchModal({ visible, profile, onClose }: MatchModalProp
       if (Platform.OS !== 'web') {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       }
-      
+
       opacity.value = withSpring(1);
-      scale.value = withSequence(
-        withSpring(1.2),
-        withSpring(1)
-      );
+      scale.value = withSequence(withSpring(1.2), withSpring(1));
       heartScale.value = withDelay(
         200,
-        withSequence(
-          withSpring(1.5),
-          withSpring(1)
-        )
+        withSequence(withSpring(1.5), withSpring(1)),
       );
     } else {
       opacity.value = 0;
@@ -63,32 +69,38 @@ export default function MatchModal({ visible, profile, onClose }: MatchModalProp
     <Modal visible={visible} transparent animationType="none">
       <View style={styles.overlay}>
         <LinearGradient
-          colors={['#FF6B9D', '#C44569']}
+          colors={['#cebdff', '#cebdff']}
           style={styles.gradientBackground}
         >
           <Animated.View style={[styles.container, modalStyle]}>
             <Animated.View style={[styles.heartContainer, heartStyle]}>
-              <Heart size={60} color="#fff" fill="#fff" />
+              <Heart size={60} color="#000" fill="#000" />
             </Animated.View>
-            
+
             <Text style={styles.matchText}>It's a Match!</Text>
-            
+
             <Text style={styles.subtitle}>
               You and {profile.name} have liked each other
             </Text>
-            
+
             <View style={styles.profileContainer}>
-              <Image source={{ uri: profile.images[0] }} style={styles.profileImage} />
+              <Image
+                source={{ uri: profile.images[0] }}
+                style={styles.profileImage}
+              />
             </View>
-            
+
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.messageButton} activeOpacity={0.8}>
+              <TouchableOpacity
+                style={styles.messageButton}
+                activeOpacity={0.8}
+              >
                 <MessageCircle size={24} color="#fff" />
                 <Text style={styles.messageText}>Send Message</Text>
               </TouchableOpacity>
-              
-              <TouchableOpacity 
-                style={styles.continueButton} 
+
+              <TouchableOpacity
+                style={styles.continueButton}
                 onPress={onClose}
                 activeOpacity={0.8}
               >
@@ -123,17 +135,19 @@ const styles = StyleSheet.create({
   },
   matchText: {
     fontSize: 42,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontWeight: '900',
+    color: '#000',
     marginBottom: 10,
     textAlign: 'center',
+    textTransform: 'uppercase',
   },
   subtitle: {
     fontSize: 18,
-    color: '#fff',
-    opacity: 0.9,
+    color: '#000',
+    opacity: 1,
     textAlign: 'center',
     marginBottom: 40,
+    fontWeight: '700',
   },
   profileContainer: {
     marginBottom: 40,
@@ -141,38 +155,53 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 120,
     height: 120,
-    borderRadius: 60,
+    borderRadius: 0,
     borderWidth: 4,
-    borderColor: '#fff',
+    borderColor: '#000',
   },
   buttonContainer: {
     width: '100%',
   },
   messageButton: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFF9C4',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 16,
-    borderRadius: 30,
+    borderRadius: 0,
     marginBottom: 16,
+    borderWidth: 3,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   messageText: {
-    color: '#C44569',
+    color: '#000',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
     marginLeft: 8,
+    textTransform: 'uppercase',
   },
   continueButton: {
-    borderWidth: 2,
-    borderColor: '#fff',
+    borderWidth: 3,
+    borderColor: '#000',
     paddingVertical: 16,
-    borderRadius: 30,
+    borderRadius: 0,
     alignItems: 'center',
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   continueText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    textTransform: 'uppercase',
   },
 });

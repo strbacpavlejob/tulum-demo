@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, Href } from 'expo-router';
@@ -93,11 +94,41 @@ export default function OnboardingStep4() {
 
   const isFormValid = genderPreference.length > 0;
 
+  const GridBackground = () => {
+    const { width, height } = Dimensions.get('window');
+    const gridSize = 30;
+    const horizontalLines = Math.ceil(height / gridSize);
+    const verticalLines = Math.ceil(width / gridSize);
+
+    return (
+      <View style={styles.gridContainer}>
+        {Array.from({ length: horizontalLines }).map((_, i) => (
+          <View
+            key={`h-${i}`}
+            style={[
+              styles.gridLine,
+              styles.horizontalLine,
+              { top: i * gridSize },
+            ]}
+          />
+        ))}
+        {Array.from({ length: verticalLines }).map((_, i) => (
+          <View
+            key={`v-${i}`}
+            style={[
+              styles.gridLine,
+              styles.verticalLine,
+              { left: i * gridSize },
+            ]}
+          />
+        ))}
+      </View>
+    );
+  };
+
   return (
-    <LinearGradient
-      colors={['#FF6B6B', '#FF8E8E', '#FFB4B4']}
-      style={styles.container}
-    >
+    <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
+      <GridBackground />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -206,7 +237,7 @@ export default function OnboardingStep4() {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-            <ChevronLeft size={24} color="#FF6B6B" />
+            <ChevronLeft size={24} color="#000" />
             <Text style={styles.backButtonText}>Back</Text>
           </TouchableOpacity>
 
@@ -219,7 +250,7 @@ export default function OnboardingStep4() {
             disabled={!isFormValid}
           >
             <Text style={styles.nextButtonText}>Continue</Text>
-            <ChevronRight size={24} color="#fff" />
+            <ChevronRight size={24} color="#000" />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -231,6 +262,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  gridContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflow: 'hidden',
+  },
+  gridLine: {
+    position: 'absolute',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  horizontalLine: {
+    left: 0,
+    right: 0,
+    height: 1,
+  },
+  verticalLine: {
+    top: 0,
+    bottom: 0,
+    width: 1,
+  },
   scrollContent: {
     flexGrow: 1,
     padding: 24,
@@ -241,28 +294,42 @@ const styles = StyleSheet.create({
   },
   stepIndicator: {
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.8)',
+    fontWeight: '800',
+    color: '#fff',
     marginBottom: 8,
+    textTransform: 'uppercase',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 0,
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#fff',
     marginBottom: 8,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 0,
   },
   subtitle: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.9)',
+    fontWeight: '700',
+    color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 0,
   },
   formContainer: {
     backgroundColor: '#fff',
-    borderRadius: 24,
+    borderRadius: 0,
     padding: 24,
     marginBottom: 24,
+    borderWidth: 3,
+    borderColor: '#000',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
+    shadowOffset: { width: 6, height: 6 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
     elevation: 8,
   },
   section: {
@@ -270,9 +337,10 @@ const styles = StyleSheet.create({
   },
   sectionLabel: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: '800',
+    color: '#000',
     marginBottom: 12,
+    textTransform: 'uppercase',
   },
   genderContainer: {
     flexDirection: 'row',
@@ -282,22 +350,28 @@ const styles = StyleSheet.create({
   genderButton: {
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 24,
-    backgroundColor: '#F5F5F5',
-    borderWidth: 2,
-    borderColor: 'transparent',
+    borderRadius: 0,
+    backgroundColor: '#fff',
+    borderWidth: 3,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   genderButtonSelected: {
-    backgroundColor: '#FFE5E5',
-    borderColor: '#FF6B6B',
+    backgroundColor: '#FFF9C4',
+    borderColor: '#000',
   },
   genderButtonText: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
+    fontWeight: '800',
+    color: '#000',
+    textTransform: 'uppercase',
   },
   genderButtonTextSelected: {
-    color: '#FF6B6B',
+    color: '#000',
   },
   rangeContainer: {
     flexDirection: 'row',
@@ -309,43 +383,45 @@ const styles = StyleSheet.create({
   },
   rangeLabel: {
     fontSize: 12,
-    color: '#999',
+    fontWeight: '700',
+    color: '#000',
     marginBottom: 8,
+    textTransform: 'uppercase',
   },
   rangeSeparator: {
     fontSize: 16,
-    color: '#666',
+    fontWeight: '800',
+    color: '#000',
     marginHorizontal: 20,
   },
   stepper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F5F5F5',
-    borderRadius: 12,
+    backgroundColor: '#fff',
+    borderRadius: 0,
     padding: 4,
+    borderWidth: 3,
+    borderColor: '#000',
   },
   stepperButton: {
     width: 40,
     height: 40,
-    borderRadius: 10,
-    backgroundColor: '#fff',
+    borderRadius: 0,
+    backgroundColor: '#FFF9C4',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    borderWidth: 2,
+    borderColor: '#000',
   },
   stepperButtonText: {
     fontSize: 24,
-    fontWeight: '600',
-    color: '#FF6B6B',
+    fontWeight: '900',
+    color: '#000',
   },
   stepperValue: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: '900',
+    color: '#000',
     minWidth: 50,
     textAlign: 'center',
   },
@@ -360,12 +436,14 @@ const styles = StyleSheet.create({
   },
   distanceNumber: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#FF6B6B',
+    fontWeight: '900',
+    color: '#000',
   },
   distanceUnit: {
     fontSize: 14,
-    color: '#666',
+    fontWeight: '700',
+    color: '#000',
+    textTransform: 'uppercase',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -375,34 +453,51 @@ const styles = StyleSheet.create({
   backButton: {
     flex: 1,
     backgroundColor: '#fff',
-    borderRadius: 16,
+    borderRadius: 0,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
+    borderWidth: 3,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   backButtonText: {
-    color: '#FF6B6B',
+    color: '#000',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    textTransform: 'uppercase',
   },
   nextButton: {
     flex: 2,
-    backgroundColor: '#333',
-    borderRadius: 16,
+    backgroundColor: '#FFF9C4',
+    borderRadius: 0,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
+    borderWidth: 3,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   nextButtonDisabled: {
     opacity: 0.6,
+    shadowOffset: { width: 2, height: 2 },
   },
   nextButtonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    textTransform: 'uppercase',
   },
 });

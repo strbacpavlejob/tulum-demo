@@ -1,5 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MessageCircle, Heart } from 'lucide-react-native';
 
@@ -7,7 +15,8 @@ const matches = [
   {
     id: '1',
     name: 'Sarah',
-    image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image:
+      'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
     lastMessage: 'Hey! How are you?',
     time: '2h',
     isNew: true,
@@ -15,7 +24,8 @@ const matches = [
   {
     id: '2',
     name: 'Emma',
-    image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image:
+      'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400',
     lastMessage: 'Thanks for the super like! 😊',
     time: '1d',
     isNew: false,
@@ -24,23 +34,32 @@ const matches = [
 
 export default function MatchesScreen() {
   return (
-    <LinearGradient colors={['#FF6B9D', '#C44569']} style={styles.container}>
+    <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.header}>
           <Text style={styles.title}>Matches</Text>
-          <Heart size={24} color="#fff" fill="#fff" />
+          <Heart size={24} color="#fff" fill="#fff" strokeWidth={3} />
         </View>
 
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           <View style={styles.newMatchesSection}>
             <Text style={styles.sectionTitle}>New Matches</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.newMatchesScroll}>
-              {matches.filter(match => match.isNew).map((match) => (
-                <TouchableOpacity key={match.id} style={styles.newMatchCard}>
-                  <Image source={{ uri: match.image }} style={styles.newMatchImage} />
-                  <Text style={styles.newMatchName}>{match.name}</Text>
-                </TouchableOpacity>
-              ))}
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.newMatchesScroll}
+            >
+              {matches
+                .filter((match) => match.isNew)
+                .map((match) => (
+                  <TouchableOpacity key={match.id} style={styles.newMatchCard}>
+                    <Image
+                      source={{ uri: match.image }}
+                      style={styles.newMatchImage}
+                    />
+                    <Text style={styles.newMatchName}>{match.name}</Text>
+                  </TouchableOpacity>
+                ))}
             </ScrollView>
           </View>
 
@@ -48,7 +67,10 @@ export default function MatchesScreen() {
             <Text style={styles.sectionTitle}>Messages</Text>
             {matches.map((match) => (
               <TouchableOpacity key={match.id} style={styles.messageCard}>
-                <Image source={{ uri: match.image }} style={styles.messageImage} />
+                <Image
+                  source={{ uri: match.image }}
+                  style={styles.messageImage}
+                />
                 <View style={styles.messageContent}>
                   <View style={styles.messageHeader}>
                     <Text style={styles.messageName}>{match.name}</Text>
@@ -56,7 +78,7 @@ export default function MatchesScreen() {
                   </View>
                   <Text style={styles.messageText}>{match.lastMessage}</Text>
                 </View>
-                <MessageCircle size={20} color="#FF4458" />
+                <MessageCircle size={20} color="#000" />
               </TouchableOpacity>
             ))}
           </View>
@@ -92,15 +114,21 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: 32,
+    fontWeight: '900',
     color: '#fff',
+    textTransform: 'uppercase',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 0,
   },
   content: {
     flex: 1,
     backgroundColor: '#fff',
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    borderTopWidth: 3,
+    borderTopColor: '#000',
     paddingTop: 20,
   },
   newMatchesSection: {
@@ -109,9 +137,10 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: '900',
+    color: '#000',
     marginBottom: 16,
+    textTransform: 'uppercase',
   },
   newMatchesScroll: {
     flexDirection: 'row',
@@ -123,15 +152,16 @@ const styles = StyleSheet.create({
   newMatchImage: {
     width: 80,
     height: 80,
-    borderRadius: 40,
+    borderRadius: 0,
     marginBottom: 8,
     borderWidth: 3,
-    borderColor: '#FF4458',
+    borderColor: '#000',
   },
   newMatchName: {
     fontSize: 14,
-    fontWeight: '500',
-    color: '#333',
+    fontWeight: '800',
+    color: '#000',
+    textTransform: 'uppercase',
   },
   messagesSection: {
     paddingHorizontal: 20,
@@ -140,14 +170,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomWidth: 3,
+    borderBottomColor: '#000',
+    backgroundColor: '#FFF9C4',
+    marginBottom: 12,
+    paddingHorizontal: 12,
+    borderWidth: 3,
+    borderColor: '#000',
   },
   messageImage: {
     width: 60,
     height: 60,
-    borderRadius: 30,
+    borderRadius: 0,
     marginRight: 16,
+    borderWidth: 3,
+    borderColor: '#000',
   },
   messageContent: {
     flex: 1,
@@ -160,16 +197,19 @@ const styles = StyleSheet.create({
   },
   messageName: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: '900',
+    color: '#000',
+    textTransform: 'uppercase',
   },
   messageTime: {
     fontSize: 12,
-    color: '#999',
+    fontWeight: '700',
+    color: '#000',
   },
   messageText: {
     fontSize: 14,
-    color: '#666',
+    fontWeight: '600',
+    color: '#333',
   },
   emptyState: {
     alignItems: 'center',
@@ -178,14 +218,16 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: '900',
+    color: '#000',
     marginTop: 16,
     marginBottom: 8,
+    textTransform: 'uppercase',
   },
   emptySubtitle: {
     fontSize: 16,
-    color: '#666',
+    fontWeight: '600',
+    color: '#333',
     textAlign: 'center',
     lineHeight: 24,
   },

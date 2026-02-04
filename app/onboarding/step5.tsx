@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, Href } from 'expo-router';
@@ -34,11 +35,41 @@ export default function OnboardingStep5() {
 
   const isFormValid = selectedHobbies.length >= MIN_HOBBIES;
 
+  const GridBackground = () => {
+    const { width, height } = Dimensions.get('window');
+    const gridSize = 30;
+    const horizontalLines = Math.ceil(height / gridSize);
+    const verticalLines = Math.ceil(width / gridSize);
+
+    return (
+      <View style={styles.gridContainer}>
+        {Array.from({ length: horizontalLines }).map((_, i) => (
+          <View
+            key={`h-${i}`}
+            style={[
+              styles.gridLine,
+              styles.horizontalLine,
+              { top: i * gridSize },
+            ]}
+          />
+        ))}
+        {Array.from({ length: verticalLines }).map((_, i) => (
+          <View
+            key={`v-${i}`}
+            style={[
+              styles.gridLine,
+              styles.verticalLine,
+              { left: i * gridSize },
+            ]}
+          />
+        ))}
+      </View>
+    );
+  };
+
   return (
-    <LinearGradient
-      colors={['#FF6B6B', '#FF8E8E', '#FFB4B4']}
-      style={styles.container}
-    >
+    <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
+      <GridBackground />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -64,7 +95,7 @@ export default function OnboardingStep5() {
                 onPress={() => toggleHobby(hobby)}
               >
                 {isSelected && (
-                  <Check size={16} color="#FF6B6B" style={styles.checkIcon} />
+                  <Check size={16} color="#000" style={styles.checkIcon} />
                 )}
                 <Text
                   style={[
@@ -93,7 +124,7 @@ export default function OnboardingStep5() {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-            <ChevronLeft size={24} color="#FF6B6B" />
+            <ChevronLeft size={24} color="#000" />
             <Text style={styles.backButtonText}>Back</Text>
           </TouchableOpacity>
 
@@ -105,7 +136,7 @@ export default function OnboardingStep5() {
             onPress={handleComplete}
             disabled={!isFormValid}
           >
-            <Sparkles size={24} color="#fff" />
+            <Sparkles size={24} color="#000" />
             <Text style={styles.completeButtonText}>Complete</Text>
           </TouchableOpacity>
         </View>
@@ -118,6 +149,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  gridContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflow: 'hidden',
+  },
+  gridLine: {
+    position: 'absolute',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  horizontalLine: {
+    left: 0,
+    right: 0,
+    height: 1,
+  },
+  verticalLine: {
+    top: 0,
+    bottom: 0,
+    width: 1,
+  },
   scrollContent: {
     flexGrow: 1,
     padding: 24,
@@ -128,18 +181,30 @@ const styles = StyleSheet.create({
   },
   stepIndicator: {
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.8)',
+    fontWeight: '800',
+    color: '#fff',
     marginBottom: 8,
+    textTransform: 'uppercase',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 0,
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#fff',
     marginBottom: 8,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 0,
   },
   subtitle: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.9)',
+    fontWeight: '700',
+    color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 0,
   },
   hobbiesContainer: {
     flexDirection: 'row',
@@ -152,42 +217,48 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 24,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: 0,
+    backgroundColor: '#fff',
+    borderWidth: 3,
+    borderColor: '#000',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   hobbyChipSelected: {
-    backgroundColor: '#fff',
-    borderWidth: 2,
-    borderColor: '#FF6B6B',
+    backgroundColor: '#FFF9C4',
+    borderWidth: 3,
+    borderColor: '#000',
   },
   checkIcon: {
     marginRight: 6,
   },
   hobbyText: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
+    fontWeight: '800',
+    color: '#000',
+    textTransform: 'uppercase',
   },
   hobbyTextSelected: {
-    color: '#FF6B6B',
+    color: '#000',
   },
   countContainer: {
     marginBottom: 24,
   },
   countText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '800',
     color: '#fff',
     textAlign: 'center',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 0,
   },
   countHint: {
-    fontWeight: 'normal',
-    color: 'rgba(255, 255, 255, 0.8)',
+    fontWeight: '700',
+    color: '#fff',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -197,39 +268,51 @@ const styles = StyleSheet.create({
   backButton: {
     flex: 1,
     backgroundColor: '#fff',
-    borderRadius: 16,
+    borderRadius: 0,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
+    borderWidth: 3,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
   },
   backButtonText: {
-    color: '#FF6B6B',
+    color: '#000',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    textTransform: 'uppercase',
   },
   completeButton: {
     flex: 2,
-    backgroundColor: '#FF6B6B',
-    borderRadius: 16,
+    backgroundColor: '#FFF9C4',
+    borderRadius: 0,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
-    shadowColor: '#FF6B6B',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
+    borderWidth: 3,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
     elevation: 8,
   },
   completeButtonDisabled: {
     opacity: 0.6,
+    shadowOffset: { width: 2, height: 2 },
   },
   completeButtonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
+    textTransform: 'uppercase',
   },
 });
