@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   newMatchImage: {
     width: 80,
     height: 80,
-    borderRadius: 0,
+    borderRadius: 12,
     marginBottom: 8,
     borderWidth: 3,
     borderColor: '#000',
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderBottomWidth: 3,
     borderBottomColor: '#000',
-    backgroundColor: '#FFF9C4',
+    backgroundColor: '#fff',
     marginBottom: 12,
     paddingHorizontal: 12,
     borderWidth: 3,
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   messageImage: {
     width: 60,
     height: 60,
-    borderRadius: 0,
+    borderRadius: 12,
     marginRight: 16,
     borderWidth: 3,
     borderColor: '#000',

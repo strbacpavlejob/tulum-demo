@@ -36,12 +36,6 @@ export default function DiscoverScreen() {
     }, 300);
   };
 
-  const handleSuperLike = () => {
-    if (currentCardIndex < mockProfiles.length) {
-      handleSwipeRight(mockProfiles[currentCardIndex]);
-    }
-  };
-
   const handlePass = () => {
     if (currentCardIndex < mockProfiles.length) {
       handleSwipeLeft(mockProfiles[currentCardIndex]);
@@ -150,7 +144,6 @@ export default function DiscoverScreen() {
         <ActionButtons
           onPass={handlePass}
           onLike={handleLike}
-          onSuperLike={handleSuperLike}
           onRewind={handleRewind}
         />
 

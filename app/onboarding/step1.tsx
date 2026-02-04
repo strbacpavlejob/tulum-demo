@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     backgroundColor: '#fff',
-    borderRadius: 0,
+    borderRadius: 12,
     padding: 24,
     marginBottom: 24,
     borderWidth: 3,
@@ -258,8 +258,8 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   input: {
-    backgroundColor: '#FFF9C4',
-    borderRadius: 0,
+    backgroundColor: '#fff',
+    borderRadius: 12,
     padding: 16,
     fontSize: 16,
     color: '#000',
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   genderButton: {
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 0,
+    borderRadius: 50,
     backgroundColor: '#fff',
     borderWidth: 3,
     borderColor: '#000',
@@ -305,8 +305,8 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   nextButton: {
-    backgroundColor: '#FFF9C4',
-    borderRadius: 0,
+    backgroundColor: '#cebdff',
+    borderRadius: 50,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',

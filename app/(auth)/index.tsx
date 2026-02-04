@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     backgroundColor: '#fff',
-    borderRadius: 0,
+    borderRadius: 12,
     padding: 24,
     borderWidth: 3,
     borderColor: '#000',
@@ -294,9 +294,9 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   errorContainer: {
-    backgroundColor: '#cebdff',
+    backgroundColor: '#FF6B6B',
     padding: 12,
-    borderRadius: 0,
+    borderRadius: 12,
     marginBottom: 16,
     borderWidth: 3,
     borderColor: '#000',
@@ -318,8 +318,8 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   input: {
-    backgroundColor: '#FFF9C4',
-    borderRadius: 0,
+    backgroundColor: '#fff',
+    borderRadius: 12,
     padding: 16,
     fontSize: 16,
     color: '#000',
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: '#cebdff',
-    borderRadius: 0,
+    borderRadius: 50,
     padding: 16,
     alignItems: 'center',
     marginTop: 8,

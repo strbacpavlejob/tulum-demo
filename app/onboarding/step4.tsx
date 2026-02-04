@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     backgroundColor: '#fff',
-    borderRadius: 0,
+    borderRadius: 12,
     padding: 24,
     marginBottom: 24,
     borderWidth: 3,
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
   genderButton: {
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 0,
+    borderRadius: 50,
     backgroundColor: '#fff',
     borderWidth: 3,
     borderColor: '#000',
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 0,
+    borderRadius: 12,
     padding: 4,
     borderWidth: 3,
     borderColor: '#000',
@@ -406,8 +406,8 @@ const styles = StyleSheet.create({
   stepperButton: {
     width: 40,
     height: 40,
-    borderRadius: 0,
-    backgroundColor: '#FFF9C4',
+    borderRadius: 12,
+    backgroundColor: '#cebdff',
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
@@ -453,7 +453,7 @@ const styles = StyleSheet.create({
   backButton: {
     flex: 1,
     backgroundColor: '#fff',
-    borderRadius: 0,
+    borderRadius: 50,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -475,8 +475,8 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     flex: 2,
-    backgroundColor: '#FFF9C4',
-    borderRadius: 0,
+    backgroundColor: '#cebdff',
+    borderRadius: 50,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',

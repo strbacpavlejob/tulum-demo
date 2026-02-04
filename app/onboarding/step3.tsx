@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 0,
+    borderRadius: 12,
     padding: 16,
     borderWidth: 3,
     borderColor: '#000',
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
   radioButton: {
     width: 24,
     height: 24,
-    borderRadius: 0,
+    borderRadius: 12,
     borderWidth: 3,
     borderColor: '#000',
     justifyContent: 'center',
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
   radioButtonInner: {
     width: 12,
     height: 12,
-    borderRadius: 0,
+    borderRadius: 12,
     backgroundColor: '#000',
   },
   buttonContainer: {
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   backButton: {
     flex: 1,
     backgroundColor: '#fff',
-    borderRadius: 0,
+    borderRadius: 50,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -338,8 +338,8 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     flex: 2,
-    backgroundColor: '#FFF9C4',
-    borderRadius: 0,
+    backgroundColor: '#cebdff',
+    borderRadius: 50,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',

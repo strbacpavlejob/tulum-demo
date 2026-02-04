@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 0,
+    borderRadius: 12,
     backgroundColor: '#fff',
     borderWidth: 3,
     borderColor: '#000',
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
   backButton: {
     flex: 1,
     backgroundColor: '#fff',
-    borderRadius: 0,
+    borderRadius: 50,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -290,8 +290,8 @@ const styles = StyleSheet.create({
   },
   completeButton: {
     flex: 2,
-    backgroundColor: '#FFF9C4',
-    borderRadius: 0,
+    backgroundColor: '#cebdff',
+    borderRadius: 50,
     padding: 18,
     flexDirection: 'row',
     justifyContent: 'center',

@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { Flame, MessageCircle, User } from 'lucide-react-native';
+import { Heart, MessageCircle, User } from 'lucide-react-native';
 
 export default function TabLayout() {
   return (
@@ -8,13 +8,9 @@ export default function TabLayout() {
         headerShown: false,
         tabBarActiveTintColor: '#000',
         tabBarInactiveTintColor: '#666',
-        tabBarLabelStyle: {
-          fontWeight: '800',
-          textTransform: 'uppercase',
-          fontSize: 10,
-        },
+        tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: '#FFF9C4',
+          backgroundColor: '#fff',
           borderTopWidth: 3,
           borderTopColor: '#000',
           paddingTop: 8,
@@ -27,15 +23,25 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Discover',
-          tabBarIcon: ({ size, color }) => <Flame size={size} color={color} />,
+          tabBarIcon: ({ size, focused }) => (
+            <Heart
+              size={size}
+              color="#000"
+              fill={focused ? '#cebdff' : 'transparent'}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="matches"
         options={{
           title: 'Matches',
-          tabBarIcon: ({ size, color }) => (
-            <MessageCircle size={size} color={color} />
+          tabBarIcon: ({ size, focused }) => (
+            <MessageCircle
+              size={size}
+              color="#000"
+              fill={focused ? '#cebdff' : 'transparent'}
+            />
           ),
         }}
       />
@@ -43,7 +49,13 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ size, color }) => <User size={size} color={color} />,
+          tabBarIcon: ({ size, focused }) => (
+            <User
+              size={size}
+              color="#000"
+              fill={focused ? '#cebdff' : 'transparent'}
+            />
+          ),
         }}
       />
     </Tabs>
