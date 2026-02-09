@@ -15,13 +15,18 @@ import {
   Camera,
   Heart,
   Sparkles,
+  LogOut,
 } from 'lucide-react-native';
 import { useUserStore } from '@/stores/userStore';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useClerk } from '@clerk/clerk-expo';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function ProfileScreen() {
-  const { profile, onboardingData } = useUserStore();
+  const { profile, onboardingData, resetOnboarding } = useUserStore();
   const { t } = useLanguage();
+  const { signOut } = useClerk();
+  const { logout } = useAuthStore();
 
   // Use profile if available, otherwise fall back to onboardingData
   const name = profile?.name || onboardingData.name || 'Your Name';
@@ -30,6 +35,16 @@ export default function ProfileScreen() {
   const lookingFor = profile?.lookingFor || onboardingData.lookingFor;
   const hobbies = profile?.hobbies || onboardingData.hobbies || [];
   const bio = profile?.bio || '';
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      logout();
+      resetOnboarding();
+    } catch (err) {
+      console.error('Sign out error:', err);
+    }
+  };
 
   return (
     <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
@@ -127,6 +142,15 @@ export default function ProfileScreen() {
               )}
             </View>
           </View>
+
+          {/* Sign Out Button */}
+          <TouchableOpacity
+            style={styles.signOutButton}
+            onPress={handleSignOut}
+          >
+            <LogOut size={20} color="#fff" />
+            <Text style={styles.signOutText}>{t('profile.signOut')}</Text>
+          </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
@@ -356,5 +380,30 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '800',
     color: '#000',
+  },
+  signOutButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    backgroundColor: '#FF6B6B',
+    borderRadius: 12,
+    borderWidth: 3,
+    borderColor: '#000',
+    marginTop: 24,
+    marginBottom: 40,
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 4,
+  },
+  signOutText: {
+    fontSize: 16,
+    fontWeight: '900',
+    color: '#fff',
+    textTransform: 'uppercase',
   },
 });

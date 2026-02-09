@@ -26,7 +26,10 @@
     "signUp": "Sign Up",
     "noAccount": "Don't have an account? Sign Up",
     "hasAccount": "Already have an account? Sign In",
-    "passwordsDoNotMatch": "Passwords do not match"
+    "passwordsDoNotMatch": "Passwords do not match",
+    "orContinueWith": "or continue with",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithApple": "Continue with Apple"
   },
   "onboarding": {
     "step1": {
@@ -124,7 +127,8 @@
     "lookingFor": "Looking For",
     "aboutMe": "About Me",
     "myInterests": "My Interests",
-    "myPhotos": "My Photos"
+    "myPhotos": "My Photos",
+    "signOut": "Sign Out"
   },
   "settings": {
     "title": "Settings",

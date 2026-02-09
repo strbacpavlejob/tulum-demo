@@ -3,16 +3,20 @@ import { Stack, useRouter, useSegments, Href } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { ClerkProvider, ClerkLoaded, useAuth } from '@clerk/clerk-expo';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { useAuthStore } from '@/stores/authStore';
 import { useUserStore } from '@/stores/userStore';
 import { LanguageProvider } from '@/contexts/LanguageContext';
+import { tokenCache } from '@/lib/tokenCache';
+import { CLERK_PUBLISHABLE_KEY } from '@/config/clerk';
 
 function AuthNavigator() {
   const router = useRouter();
   const segments = useSegments();
-  const { status, token } = useAuthStore();
+  const { isSignedIn, isLoaded } = useAuth();
   const { profile } = useUserStore();
+  const { setAuthenticated, logout } = useAuthStore();
   const [isNavigationReady, setIsNavigationReady] = useState(false);
 
   useEffect(() => {
@@ -24,15 +28,15 @@ function AuthNavigator() {
   }, []);
 
   useEffect(() => {
-    if (!isNavigationReady) return;
-    if (status === 'loading' || status === 'idle') return;
+    if (!isNavigationReady || !isLoaded) return;
 
     const inAuthGroup = (segments[0] as string) === '(auth)';
     const inOnboarding = (segments[0] as string) === 'onboarding';
     const inTabsGroup = (segments[0] as string) === '(tabs)';
 
-    if (!token) {
+    if (!isSignedIn) {
       // Not authenticated, redirect to auth
+      logout();
       if (!inAuthGroup) {
         router.replace('/(auth)' as Href);
       }
@@ -47,37 +51,34 @@ function AuthNavigator() {
         router.replace('/(tabs)' as Href);
       }
     }
-  }, [status, token, profile, segments, isNavigationReady]);
+  }, [isSignedIn, isLoaded, profile, segments, isNavigationReady]);
 
   return null;
 }
 
 export default function RootLayout() {
   useFrameworkReady();
-  const { status } = useAuthStore();
-
-  // Show loading screen while checking auth status
-  if (status === 'idle') {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#cebdff" />
-      </View>
-    );
-  }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <LanguageProvider>
-        <AuthNavigator />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="onboarding" />
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </LanguageProvider>
-    </GestureHandlerRootView>
+    <ClerkProvider
+      publishableKey={CLERK_PUBLISHABLE_KEY}
+      tokenCache={tokenCache}
+    >
+      <ClerkLoaded>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <LanguageProvider>
+            <AuthNavigator />
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="onboarding" />
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+            <StatusBar style="auto" />
+          </LanguageProvider>
+        </GestureHandlerRootView>
+      </ClerkLoaded>
+    </ClerkProvider>
   );
 }
 

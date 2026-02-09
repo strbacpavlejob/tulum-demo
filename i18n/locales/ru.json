@@ -26,7 +26,10 @@
     "signUp": "Регистрация",
     "noAccount": "Нет аккаунта? Зарегистрируйтесь",
     "hasAccount": "Уже есть аккаунт? Войдите",
-    "passwordsDoNotMatch": "Пароли не совпадают"
+    "passwordsDoNotMatch": "Пароли не совпадают",
+    "orContinueWith": "или продолжить через",
+    "continueWithGoogle": "Продолжить с Google",
+    "continueWithApple": "Продолжить с Apple"
   },
   "onboarding": {
     "step1": {
@@ -124,7 +127,8 @@
     "lookingFor": "Ищу",
     "aboutMe": "Обо мне",
     "myInterests": "Мои интересы",
-    "myPhotos": "Мои фотографии"
+    "myPhotos": "Мои фото",
+    "signOut": "Выйти"
   },
   "settings": {
     "title": "Настройки",

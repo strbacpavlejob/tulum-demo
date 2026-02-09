@@ -26,7 +26,10 @@
     "signUp": "Registracija",
     "noAccount": "Nemate nalog? Registrujte se",
     "hasAccount": "Već imate nalog? Prijavite se",
-    "passwordsDoNotMatch": "Lozinke se ne poklapaju"
+    "passwordsDoNotMatch": "Lozinke se ne poklapaju",
+    "orContinueWith": "ili nastavite sa",
+    "continueWithGoogle": "Nastavi sa Google",
+    "continueWithApple": "Nastavi sa Apple"
   },
   "onboarding": {
     "step1": {
@@ -124,7 +127,8 @@
     "lookingFor": "Tražim",
     "aboutMe": "O meni",
     "myInterests": "Moja interesovanja",
-    "myPhotos": "Moje fotografije"
+    "myPhotos": "Moje fotografije",
+    "signOut": "Odjavi se"
   },
   "settings": {
     "title": "Podešavanja",

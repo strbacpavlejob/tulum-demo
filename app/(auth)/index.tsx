@@ -1,63 +1,111 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
   ActivityIndicator,
   ScrollView,
   Dimensions,
+  Image,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Heart } from 'lucide-react-native';
-import { useAuthStore } from '@/stores/authStore';
 import { useRouter, Href } from 'expo-router';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitch from '@/components/LanguageSwitch';
+import { useOAuth, useUser } from '@clerk/clerk-expo';
+import * as WebBrowser from 'expo-web-browser';
+import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
+import { useAuthStore } from '@/stores/authStore';
+
+// Handle OAuth redirects
+WebBrowser.maybeCompleteAuthSession();
 
 export default function AuthScreen() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  useWarmUpBrowser();
 
-  const { login, register, status, error, clearError } = useAuthStore();
-  const router = useRouter();
   const { t } = useLanguage();
+  const router = useRouter();
+  const { setAuthenticated, setError, error, clearError, status } =
+    useAuthStore();
+  const { user } = useUser();
 
-  const isLoading = status === 'loading';
+  const { startOAuthFlow: startGoogleOAuthFlow } = useOAuth({
+    strategy: 'oauth_google',
+  });
+  const { startOAuthFlow: startAppleOAuthFlow } = useOAuth({
+    strategy: 'oauth_apple',
+  });
 
-  const handleSubmit = async () => {
-    if (isLogin) {
-      const success = await login(email, password);
-      if (success) {
-        router.replace('/onboarding/step1' as Href);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [isAppleLoading, setIsAppleLoading] = useState(false);
+
+  const isLoading = status === 'loading' || isGoogleLoading || isAppleLoading;
+
+  const handleOAuthSuccess = useCallback(
+    async (userId: string, email: string | null) => {
+      setAuthenticated(userId, email);
+      router.replace('/onboarding/step1' as Href);
+    },
+    [setAuthenticated, router],
+  );
+
+  const handleGoogleSignIn = useCallback(async () => {
+    try {
+      setIsGoogleLoading(true);
+      clearError();
+
+      const { createdSessionId, setActive, signUp, signIn } =
+        await startGoogleOAuthFlow();
+
+      if (createdSessionId) {
+        await setActive!({ session: createdSessionId });
+
+        // Get user info from the session
+        const userData = signUp?.createdUserId || signIn?.createdSessionId;
+        const userEmail = signUp?.emailAddress || signIn?.identifier;
+
+        await handleOAuthSuccess(
+          userData || createdSessionId,
+          userEmail || null,
+        );
       }
-    } else {
-      if (password !== confirmPassword) {
-        return;
-      }
-      const success = await register(email, password);
-      if (success) {
-        router.replace('/onboarding/step1' as Href);
-      }
+    } catch (err) {
+      console.error('Google OAuth error:', err);
+      setError(err instanceof Error ? err.message : 'Google sign in failed');
+    } finally {
+      setIsGoogleLoading(false);
     }
-  };
+  }, [startGoogleOAuthFlow, handleOAuthSuccess, clearError, setError]);
 
-  const toggleMode = () => {
-    setIsLogin(!isLogin);
-    clearError();
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
-  };
+  const handleAppleSignIn = useCallback(async () => {
+    try {
+      setIsAppleLoading(true);
+      clearError();
 
-  const isFormValid = isLogin
-    ? email.length > 0 && password.length >= 6
-    : email.length > 0 && password.length >= 6 && password === confirmPassword;
+      const { createdSessionId, setActive, signUp, signIn } =
+        await startAppleOAuthFlow();
+
+      if (createdSessionId) {
+        await setActive!({ session: createdSessionId });
+
+        // Get user info from the session
+        const userData = signUp?.createdUserId || signIn?.createdSessionId;
+        const userEmail = signUp?.emailAddress || signIn?.identifier;
+
+        await handleOAuthSuccess(
+          userData || createdSessionId,
+          userEmail || null,
+        );
+      }
+    } catch (err) {
+      console.error('Apple OAuth error:', err);
+      setError(err instanceof Error ? err.message : 'Apple sign in failed');
+    } finally {
+      setIsAppleLoading(false);
+    }
+  }, [startAppleOAuthFlow, handleOAuthSuccess, clearError, setError]);
 
   const GridBackground = () => {
     const { width, height } = Dimensions.get('window');
@@ -97,111 +145,79 @@ export default function AuthScreen() {
       <View style={styles.languageSwitchContainer}>
         <LanguageSwitch />
       </View>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardView}
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
       >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={styles.logoContainer}>
-            <View style={styles.logoCircle}>
-              <Heart size={48} color="#000" fill="#000" />
-            </View>
-            <Text style={styles.appName}>{t('auth.appName')}</Text>
-            <Text style={styles.tagline}>{t('auth.tagline')}</Text>
+        <View style={styles.logoContainer}>
+          <View style={styles.logoCircle}>
+            <Heart size={48} color="#000" fill="#000" />
           </View>
+          <Text style={styles.appName}>{t('auth.appName')}</Text>
+          <Text style={styles.tagline}>{t('auth.tagline')}</Text>
+        </View>
 
-          <View style={styles.formContainer}>
-            <Text style={styles.title}>
-              {isLogin ? t('auth.welcomeBack') : t('auth.createAccount')}
-            </Text>
+        <View style={styles.formContainer}>
+          <Text style={styles.title}>{t('auth.welcomeBack')}</Text>
 
-            {error && (
-              <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>{error}</Text>
-              </View>
-            )}
-
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>{t('auth.email')}</Text>
-              <TextInput
-                style={styles.input}
-                placeholder={t('auth.emailPlaceholder')}
-                placeholderTextColor="#999"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-                editable={!isLoading}
-              />
+          {error && (
+            <View style={styles.errorContainer}>
+              <Text style={styles.errorText}>{error}</Text>
             </View>
+          )}
 
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>{t('auth.password')}</Text>
-              <TextInput
-                style={styles.input}
-                placeholder={t('auth.passwordPlaceholder')}
-                placeholderTextColor="#999"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                editable={!isLoading}
-              />
-            </View>
-
-            {!isLogin && (
-              <View style={styles.inputContainer}>
-                <Text style={styles.label}>{t('auth.confirmPassword')}</Text>
-                <TextInput
-                  style={[
-                    styles.input,
-                    password !== confirmPassword && confirmPassword.length > 0
-                      ? styles.inputError
-                      : null,
-                  ]}
-                  placeholder={t('auth.confirmPasswordPlaceholder')}
-                  placeholderTextColor="#999"
-                  value={confirmPassword}
-                  onChangeText={setConfirmPassword}
-                  secureTextEntry
-                  editable={!isLoading}
+          {/* Google Sign In Button */}
+          <TouchableOpacity
+            style={[styles.ssoButton, styles.googleButton]}
+            onPress={handleGoogleSignIn}
+            disabled={isLoading}
+          >
+            {isGoogleLoading ? (
+              <ActivityIndicator color="#000" />
+            ) : (
+              <>
+                <Image
+                  source={{ uri: 'https://www.google.com/favicon.ico' }}
+                  style={styles.ssoIcon}
                 />
-                {password !== confirmPassword && confirmPassword.length > 0 && (
-                  <Text style={styles.fieldError}>
-                    {t('auth.passwordsDoNotMatch')}
-                  </Text>
-                )}
-              </View>
-            )}
-
-            <TouchableOpacity
-              style={[
-                styles.submitButton,
-                !isFormValid && styles.submitButtonDisabled,
-              ]}
-              onPress={handleSubmit}
-              disabled={!isFormValid || isLoading}
-            >
-              {isLoading ? (
-                <ActivityIndicator color="#fff" />
-              ) : (
-                <Text style={styles.submitButtonText}>
-                  {isLogin ? t('auth.signIn') : t('auth.signUp')}
+                <Text style={styles.ssoButtonText}>
+                  {t('auth.continueWithGoogle')}
                 </Text>
-              )}
-            </TouchableOpacity>
+              </>
+            )}
+          </TouchableOpacity>
 
-            <TouchableOpacity onPress={toggleMode} disabled={isLoading}>
-              <Text style={styles.toggleText}>
-                {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
-              </Text>
-            </TouchableOpacity>
+          {/* Apple Sign In Button */}
+          <TouchableOpacity
+            style={[styles.ssoButton, styles.appleButton]}
+            onPress={handleAppleSignIn}
+            disabled={isLoading}
+          >
+            {isAppleLoading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <>
+                <View style={styles.appleIconContainer}>
+                  <Text style={styles.appleIcon}></Text>
+                </View>
+                <Text style={[styles.ssoButtonText, styles.appleButtonText]}>
+                  {t('auth.continueWithApple')}
+                </Text>
+              </>
+            )}
+          </TouchableOpacity>
+
+          <View style={styles.divider}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>{t('auth.orContinueWith')}</Text>
+            <View style={styles.dividerLine} />
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+
+          <Text style={styles.infoText}>
+            Sign in with your Google or Apple account to get started
+          </Text>
+        </View>
+      </ScrollView>
     </LinearGradient>
   );
 }
@@ -237,9 +253,6 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     width: 1,
-  },
-  keyboardView: {
-    flex: 1,
   },
   scrollContent: {
     flexGrow: 1,
@@ -316,43 +329,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
   },
-  inputContainer: {
-    marginBottom: 16,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '800',
-    color: '#000',
-    marginBottom: 8,
-    textTransform: 'uppercase',
-  },
-  input: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    fontSize: 16,
-    color: '#000',
-    borderWidth: 3,
-    borderColor: '#000',
-    fontWeight: '600',
-  },
-  inputError: {
-    borderColor: '#FF4444',
-    backgroundColor: '#FFE5E5',
-  },
-  fieldError: {
-    color: '#FF4444',
-    fontSize: 12,
-    marginTop: 4,
-    fontWeight: '700',
-  },
-  submitButton: {
-    backgroundColor: '#cebdff',
-    borderRadius: 50,
-    padding: 16,
+  ssoButton: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 8,
-    marginBottom: 16,
+    justifyContent: 'center',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
     borderWidth: 3,
     borderColor: '#000',
     shadowColor: '#000',
@@ -361,22 +344,54 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 4,
   },
-  submitButtonDisabled: {
-    backgroundColor: '#CCCCCC',
-    shadowOffset: { width: 2, height: 2 },
+  googleButton: {
+    backgroundColor: '#fff',
   },
-  submitButtonText: {
+  appleButton: {
+    backgroundColor: '#000',
+  },
+  ssoIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 12,
+  },
+  appleIconContainer: {
+    marginRight: 12,
+  },
+  appleIcon: {
+    fontSize: 24,
     color: '#fff',
-    fontSize: 18,
-    fontWeight: '900',
-    textTransform: 'uppercase',
-    letterSpacing: 1,
   },
-  toggleText: {
+  ssoButtonText: {
+    fontSize: 16,
+    fontWeight: '800',
     color: '#000',
+    textTransform: 'uppercase',
+  },
+  appleButtonText: {
+    color: '#fff',
+  },
+  divider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 2,
+    backgroundColor: '#ddd',
+  },
+  dividerText: {
+    paddingHorizontal: 16,
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#999',
+    textTransform: 'uppercase',
+  },
+  infoText: {
     textAlign: 'center',
     fontSize: 14,
-    fontWeight: '700',
-    textDecorationLine: 'underline',
+    color: '#666',
+    fontWeight: '600',
   },
 });
