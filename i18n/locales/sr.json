@@ -1,0 +1,136 @@
+{
+  "common": {
+    "continue": "Nastavi",
+    "back": "Nazad",
+    "cancel": "Otkaži",
+    "remove": "Ukloni",
+    "save": "Sačuvaj",
+    "edit": "Izmeni",
+    "done": "Gotovo",
+    "loading": "Učitavanje...",
+    "error": "Greška",
+    "success": "Uspeh"
+  },
+  "auth": {
+    "appName": "Tulum",
+    "tagline": "pravo vreme, pravo mesto",
+    "welcomeBack": "Dobrodošli nazad",
+    "createAccount": "Kreiraj nalog",
+    "email": "Email",
+    "emailPlaceholder": "Unesite email",
+    "password": "Lozinka",
+    "passwordPlaceholder": "Unesite lozinku",
+    "confirmPassword": "Potvrdi lozinku",
+    "confirmPasswordPlaceholder": "Potvrdite lozinku",
+    "signIn": "Prijava",
+    "signUp": "Registracija",
+    "noAccount": "Nemate nalog? Registrujte se",
+    "hasAccount": "Već imate nalog? Prijavite se",
+    "passwordsDoNotMatch": "Lozinke se ne poklapaju"
+  },
+  "onboarding": {
+    "step1": {
+      "stepIndicator": "Korak 1 od 5",
+      "title": "Hajde da se upoznamo",
+      "subtitle": "Reci nam nešto o sebi",
+      "nameLabel": "Kako se zoveš?",
+      "namePlaceholder": "Unesi svoje ime",
+      "ageLabel": "Koliko imaš godina?",
+      "agePlaceholder": "Unesi svoje godine",
+      "ageError": "Moraš imati 18 ili više godina",
+      "genderLabel": "Kog si pola?"
+    },
+    "step2": {
+      "stepIndicator": "Korak 2 od 5",
+      "title": "Dodaj svoje fotografije",
+      "subtitle": "Dodaj bar 1 fotografiju da nastaviš",
+      "hint": "Savet: Profili sa više slika dobijaju više spojeva!",
+      "maxPhotosReached": "Maksimalan broj fotografija",
+      "maxPhotosMessage": "Možeš dodati najviše {{count}} fotografija.",
+      "removePhoto": "Ukloni fotografiju",
+      "removePhotoConfirm": "Da li sigurno želiš da ukloniš ovu fotografiju?",
+      "addPhoto": "Dodaj fotografiju",
+      "takePhoto": "Slikaj",
+      "chooseFromLibrary": "Izaberi iz galerije",
+      "permissionRequired": "Potrebna dozvola",
+      "cameraPermission": "Molimo dozvolite pristup kameri.",
+      "libraryPermission": "Molimo dozvolite pristup galeriji.",
+      "main": "Glavna"
+    },
+    "step3": {
+      "stepIndicator": "Korak 3 od 5",
+      "title": "Šta tražiš?",
+      "subtitle": "Budi iskren/a, nema pogrešnog odgovora"
+    },
+    "step4": {
+      "stepIndicator": "Korak 4 od 5",
+      "title": "Tvoje preference",
+      "subtitle": "Koga želiš da upoznaš?",
+      "showMe": "Prikaži mi",
+      "ageRange": "Raspon godina",
+      "min": "Min",
+      "max": "Max",
+      "to": "do"
+    },
+    "step5": {
+      "stepIndicator": "Korak 5 od 5",
+      "title": "Tvoja interesovanja",
+      "subtitle": "Izaberi bar {{count}} hobija koje voliš",
+      "getStarted": "Započni"
+    }
+  },
+  "gender": {
+    "male": "Muško",
+    "female": "Žensko",
+    "other": "Ostalo",
+    "men": "Muškarci",
+    "women": "Žene"
+  },
+  "lookingFor": {
+    "relationship": "Veza",
+    "relationshipDesc": "Tražim nešto ozbiljno",
+    "casual": "Opušteno",
+    "casualDesc": "Otvoren/a da vidim kuda vodi",
+    "friendship": "Prijateljstvo",
+    "friendshipDesc": "Želim da upoznam nove prijatelje",
+    "notSure": "Nisam siguran/na",
+    "notSureDesc": "Još uvek se snalazim",
+    "party": "Za zabavu",
+    "partyDesc": "Samo želim da se zabavim"
+  },
+  "discover": {
+    "title": "Otkrij",
+    "noMoreProfiles": "Nema više profila",
+    "checkBackLater": "Proveri ponovo kasnije za nove ljude!",
+    "like": "SVIĐA MI SE",
+    "pass": "PRESKOČI",
+    "kmAway": "{{distance}} km daleko"
+  },
+  "matches": {
+    "title": "Spojevi",
+    "newMatches": "Novi spojevi",
+    "messages": "Poruke",
+    "noMatches": "Još nema spojeva",
+    "keepSwiping": "Nastavi da svajapaš da nađeš savršen spoj!",
+    "itsAMatch": "Spoj!",
+    "youAndMatched": "Ti i {{name}} ste se dopali",
+    "sendMessage": "Pošalji poruku",
+    "keepSwiping2": "Nastavi da svajpaš"
+  },
+  "profile": {
+    "title": "Moj profil",
+    "editProfile": "Izmeni profil",
+    "yearsOld": "{{age}} godina",
+    "lookingFor": "Tražim",
+    "aboutMe": "O meni",
+    "myInterests": "Moja interesovanja",
+    "myPhotos": "Moje fotografije"
+  },
+  "settings": {
+    "title": "Podešavanja",
+    "language": "Jezik",
+    "notifications": "Obaveštenja",
+    "privacy": "Privatnost",
+    "logout": "Odjava"
+  }
+}

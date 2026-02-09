@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MessageCircle, Heart } from 'lucide-react-native';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const matches = [
   {
@@ -33,17 +34,19 @@ const matches = [
 ];
 
 export default function MatchesScreen() {
+  const { t } = useLanguage();
+
   return (
     <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.header}>
-          <Text style={styles.title}>Matches</Text>
+          <Text style={styles.title}>{t('matches.title')}</Text>
           <Heart size={24} color="#fff" fill="#fff" strokeWidth={3} />
         </View>
 
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           <View style={styles.newMatchesSection}>
-            <Text style={styles.sectionTitle}>New Matches</Text>
+            <Text style={styles.sectionTitle}>{t('matches.newMatches')}</Text>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -64,7 +67,7 @@ export default function MatchesScreen() {
           </View>
 
           <View style={styles.messagesSection}>
-            <Text style={styles.sectionTitle}>Messages</Text>
+            <Text style={styles.sectionTitle}>{t('matches.messages')}</Text>
             {matches.map((match) => (
               <TouchableOpacity key={match.id} style={styles.messageCard}>
                 <Image
@@ -86,9 +89,9 @@ export default function MatchesScreen() {
           {matches.length === 0 && (
             <View style={styles.emptyState}>
               <Heart size={60} color="#fff" opacity={0.5} />
-              <Text style={styles.emptyTitle}>No matches yet</Text>
+              <Text style={styles.emptyTitle}>{t('matches.noMatches')}</Text>
               <Text style={styles.emptySubtitle}>
-                Keep swiping to find your perfect match!
+                {t('matches.keepSwiping')}
               </Text>
             </View>
           )}

@@ -17,17 +17,11 @@ import {
   Sparkles,
 } from 'lucide-react-native';
 import { useUserStore } from '@/stores/userStore';
-
-const LOOKING_FOR_LABELS: Record<string, string> = {
-  relationship: 'Relationship',
-  casual: 'Casual',
-  friendship: 'Friendship',
-  'not-sure': 'Not Sure Yet',
-  party: 'Party Animal',
-};
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ProfileScreen() {
   const { profile, onboardingData } = useUserStore();
+  const { t } = useLanguage();
 
   // Use profile if available, otherwise fall back to onboardingData
   const name = profile?.name || onboardingData.name || 'Your Name';
@@ -41,7 +35,7 @@ export default function ProfileScreen() {
     <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.header}>
-          <Text style={styles.title}>My Profile</Text>
+          <Text style={styles.title}>{t('profile.title')}</Text>
           <Settings size={24} color="#fff" strokeWidth={3} />
         </View>
 
@@ -63,10 +57,12 @@ export default function ProfileScreen() {
               </TouchableOpacity>
             </View>
             <Text style={styles.name}>{name}</Text>
-            <Text style={styles.age}>{age} years old</Text>
+            <Text style={styles.age}>
+              {t('profile.yearsOld', { age: age.toString() })}
+            </Text>
             <TouchableOpacity style={styles.editButton}>
               <Edit3 size={16} color="#000" />
-              <Text style={styles.editText}>Edit Profile</Text>
+              <Text style={styles.editText}>{t('profile.editProfile')}</Text>
             </TouchableOpacity>
           </View>
 
@@ -75,9 +71,13 @@ export default function ProfileScreen() {
               <View style={styles.infoCard}>
                 <Heart size={20} color="#000" />
                 <View style={styles.infoContent}>
-                  <Text style={styles.infoTitle}>Looking For</Text>
+                  <Text style={styles.infoTitle}>
+                    {t('profile.lookingFor')}
+                  </Text>
                   <Text style={styles.infoValue}>
-                    {LOOKING_FOR_LABELS[lookingFor] || lookingFor}
+                    {t(
+                      `lookingFor.${lookingFor === 'not-sure' ? 'notSure' : lookingFor}`,
+                    )}
                   </Text>
                 </View>
               </View>
@@ -86,14 +86,16 @@ export default function ProfileScreen() {
 
           {bio ? (
             <View style={styles.bioSection}>
-              <Text style={styles.bioTitle}>About Me</Text>
+              <Text style={styles.bioTitle}>{t('profile.aboutMe')}</Text>
               <Text style={styles.bioText}>{bio}</Text>
             </View>
           ) : null}
 
           {hobbies.length > 0 && (
             <View style={styles.hobbiesSection}>
-              <Text style={styles.hobbiesTitle}>My Interests</Text>
+              <Text style={styles.hobbiesTitle}>
+                {t('profile.myInterests')}
+              </Text>
               <View style={styles.hobbiesContainer}>
                 {hobbies.map((hobby, index) => (
                   <View key={index} style={styles.hobbyChip}>
@@ -106,7 +108,7 @@ export default function ProfileScreen() {
           )}
 
           <View style={styles.photosSection}>
-            <Text style={styles.photosTitle}>My Photos</Text>
+            <Text style={styles.photosTitle}>{t('profile.myPhotos')}</Text>
             <View style={styles.photosGrid}>
               {photos.slice(1, 3).map((photo, index) => (
                 <View key={index} style={styles.photoSlot}>

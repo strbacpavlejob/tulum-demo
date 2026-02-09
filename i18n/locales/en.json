@@ -1,0 +1,136 @@
+{
+  "common": {
+    "continue": "Continue",
+    "back": "Back",
+    "cancel": "Cancel",
+    "remove": "Remove",
+    "save": "Save",
+    "edit": "Edit",
+    "done": "Done",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "auth": {
+    "appName": "Tulum",
+    "tagline": "right time, right place",
+    "welcomeBack": "Welcome Back",
+    "createAccount": "Create Account",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "noAccount": "Don't have an account? Sign Up",
+    "hasAccount": "Already have an account? Sign In",
+    "passwordsDoNotMatch": "Passwords do not match"
+  },
+  "onboarding": {
+    "step1": {
+      "stepIndicator": "Step 1 of 5",
+      "title": "Let's get to know you",
+      "subtitle": "Tell us about yourself",
+      "nameLabel": "What's your name?",
+      "namePlaceholder": "Enter your name",
+      "ageLabel": "How old are you?",
+      "agePlaceholder": "Enter your age",
+      "ageError": "You must be 18 or older",
+      "genderLabel": "What's your gender?"
+    },
+    "step2": {
+      "stepIndicator": "Step 2 of 5",
+      "title": "Add your photos",
+      "subtitle": "Add at least 1 photo to continue",
+      "hint": "Tip: Profiles with more photos get more matches!",
+      "maxPhotosReached": "Maximum photos reached",
+      "maxPhotosMessage": "You can only add up to {{count}} photos.",
+      "removePhoto": "Remove Photo",
+      "removePhotoConfirm": "Are you sure you want to remove this photo?",
+      "addPhoto": "Add Photo",
+      "takePhoto": "Take Photo",
+      "chooseFromLibrary": "Choose from Library",
+      "permissionRequired": "Permission required",
+      "cameraPermission": "Please allow access to your camera.",
+      "libraryPermission": "Please allow access to your photo library.",
+      "main": "Main"
+    },
+    "step3": {
+      "stepIndicator": "Step 3 of 5",
+      "title": "What are you looking for?",
+      "subtitle": "Be honest, there's no wrong answer"
+    },
+    "step4": {
+      "stepIndicator": "Step 4 of 5",
+      "title": "Your preferences",
+      "subtitle": "Who would you like to meet?",
+      "showMe": "Show me",
+      "ageRange": "Age range",
+      "min": "Min",
+      "max": "Max",
+      "to": "to"
+    },
+    "step5": {
+      "stepIndicator": "Step 5 of 5",
+      "title": "Your interests",
+      "subtitle": "Select at least {{count}} hobbies you enjoy",
+      "getStarted": "Get Started"
+    }
+  },
+  "gender": {
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "men": "Men",
+    "women": "Women"
+  },
+  "lookingFor": {
+    "relationship": "Relationship",
+    "relationshipDesc": "Looking for something serious",
+    "casual": "Casual",
+    "casualDesc": "Open to see where things go",
+    "friendship": "Friendship",
+    "friendshipDesc": "Looking to make new friends",
+    "notSure": "Not Sure Yet",
+    "notSureDesc": "Still figuring things out",
+    "party": "Party Animal",
+    "partyDesc": "Just want to have fun"
+  },
+  "discover": {
+    "title": "Discover",
+    "noMoreProfiles": "No more profiles",
+    "checkBackLater": "Check back later for new people!",
+    "like": "LIKE",
+    "pass": "PASS",
+    "kmAway": "{{distance}} km away"
+  },
+  "matches": {
+    "title": "Matches",
+    "newMatches": "New Matches",
+    "messages": "Messages",
+    "noMatches": "No matches yet",
+    "keepSwiping": "Keep swiping to find your perfect match!",
+    "itsAMatch": "It's a Match!",
+    "youAndMatched": "You and {{name}} liked each other",
+    "sendMessage": "Send Message",
+    "keepSwiping2": "Keep Swiping"
+  },
+  "profile": {
+    "title": "My Profile",
+    "editProfile": "Edit Profile",
+    "yearsOld": "{{age}} years old",
+    "lookingFor": "Looking For",
+    "aboutMe": "About Me",
+    "myInterests": "My Interests",
+    "myPhotos": "My Photos"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "notifications": "Notifications",
+    "privacy": "Privacy",
+    "logout": "Log Out"
+  }
+}

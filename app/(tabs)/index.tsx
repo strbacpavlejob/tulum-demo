@@ -7,11 +7,13 @@ import MatchModal from '@/components/MatchModal';
 import { mockProfiles } from '@/data/profiles';
 import { Profile } from '@/types/Profile';
 import { Settings } from 'lucide-react-native';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function DiscoverScreen() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [matchedProfile, setMatchedProfile] = useState<Profile | null>(null);
   const [showMatch, setShowMatch] = useState(false);
+  const { t } = useLanguage();
 
   const handleSwipeLeft = (profile: Profile) => {
     console.log('Passed on:', profile.name);
@@ -117,9 +119,11 @@ export default function DiscoverScreen() {
         <GridBackground />
         <SafeAreaView style={styles.safeArea}>
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyTitle}>No More Profiles!</Text>
+            <Text style={styles.emptyTitle}>
+              {t('discover.noMoreProfiles')}
+            </Text>
             <Text style={styles.emptySubtitle}>
-              Check back later for new people in your area
+              {t('discover.checkBackLater')}
             </Text>
           </View>
         </SafeAreaView>

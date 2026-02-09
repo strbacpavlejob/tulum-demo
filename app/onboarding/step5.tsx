@@ -13,6 +13,8 @@ import { useUserStore } from '@/stores/userStore';
 import { useAuthStore } from '@/stores/authStore';
 import { AVAILABLE_HOBBIES } from '@/types/User';
 import { ChevronLeft, Check, Sparkles } from 'lucide-react-native';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSwitch from '@/components/LanguageSwitch';
 
 const MIN_HOBBIES = 3;
 
@@ -20,6 +22,7 @@ export default function OnboardingStep5() {
   const router = useRouter();
   const { onboardingData, toggleHobby, completeOnboarding } = useUserStore();
   const { userId, email } = useAuthStore();
+  const { t } = useLanguage();
   const selectedHobbies = onboardingData.hobbies;
 
   const handleComplete = () => {
@@ -70,15 +73,20 @@ export default function OnboardingStep5() {
   return (
     <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
       <GridBackground />
+      <View style={styles.languageSwitchContainer}>
+        <LanguageSwitch />
+      </View>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.header}>
-          <Text style={styles.stepIndicator}>Step 5 of 5</Text>
-          <Text style={styles.title}>Your interests</Text>
+          <Text style={styles.stepIndicator}>
+            {t('onboarding.step5.stepIndicator')}
+          </Text>
+          <Text style={styles.title}>{t('onboarding.step5.title')}</Text>
           <Text style={styles.subtitle}>
-            Select at least {MIN_HOBBIES} hobbies you enjoy
+            {t('onboarding.step5.subtitle', { count: MIN_HOBBIES.toString() })}
           </Text>
         </View>
 
@@ -125,7 +133,7 @@ export default function OnboardingStep5() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
             <ChevronLeft size={24} color="#000" />
-            <Text style={styles.backButtonText}>Back</Text>
+            <Text style={styles.backButtonText}>{t('common.back')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -137,7 +145,9 @@ export default function OnboardingStep5() {
             disabled={!isFormValid}
           >
             <Sparkles size={24} color="#000" />
-            <Text style={styles.completeButtonText}>Complete</Text>
+            <Text style={styles.completeButtonText}>
+              {t('onboarding.step5.getStarted')}
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -148,6 +158,12 @@ export default function OnboardingStep5() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  languageSwitchContainer: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    zIndex: 100,
   },
   gridContainer: {
     position: 'absolute',

@@ -20,41 +20,43 @@ import {
   HelpCircle,
   PartyPopper,
 } from 'lucide-react-native';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSwitch from '@/components/LanguageSwitch';
 
 const LOOKING_FOR_OPTIONS: {
   value: LookingFor;
-  label: string;
-  description: string;
+  labelKey: string;
+  descriptionKey: string;
   icon: React.ReactNode;
 }[] = [
   {
     value: 'relationship',
-    label: 'Relationship',
-    description: 'Looking for something serious',
+    labelKey: 'lookingFor.relationship',
+    descriptionKey: 'lookingFor.relationshipDesc',
     icon: <Heart size={32} color="#cebdff" />,
   },
   {
     value: 'casual',
-    label: 'Casual',
-    description: 'Open to see where things go',
+    labelKey: 'lookingFor.casual',
+    descriptionKey: 'lookingFor.casualDesc',
     icon: <Coffee size={32} color="#cebdff" />,
   },
   {
     value: 'friendship',
-    label: 'Friendship',
-    description: 'Looking to make new friends',
+    labelKey: 'lookingFor.friendship',
+    descriptionKey: 'lookingFor.friendshipDesc',
     icon: <Users size={32} color="#cebdff" />,
   },
   {
     value: 'not-sure',
-    label: 'Not Sure Yet',
-    description: 'Still figuring things out',
+    labelKey: 'lookingFor.notSure',
+    descriptionKey: 'lookingFor.notSureDesc',
     icon: <HelpCircle size={32} color="#cebdff" />,
   },
   {
     value: 'party',
-    label: 'Party Animal',
-    description: 'Just want to have fun',
+    labelKey: 'lookingFor.party',
+    descriptionKey: 'lookingFor.partyDesc',
     icon: <PartyPopper size={32} color="#cebdff" />,
   },
 ];
@@ -63,6 +65,7 @@ export default function OnboardingStep3() {
   const router = useRouter();
   const { onboardingData, updateOnboardingData, setOnboardingStep } =
     useUserStore();
+  const { t } = useLanguage();
   const [lookingFor, setLookingFor] = useState<LookingFor | null>(
     onboardingData.lookingFor,
   );
@@ -114,16 +117,19 @@ export default function OnboardingStep3() {
   return (
     <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
       <GridBackground />
+      <View style={styles.languageSwitchContainer}>
+        <LanguageSwitch />
+      </View>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.header}>
-          <Text style={styles.stepIndicator}>Step 3 of 5</Text>
-          <Text style={styles.title}>What are you looking for?</Text>
-          <Text style={styles.subtitle}>
-            This helps us find better matches for you
+          <Text style={styles.stepIndicator}>
+            {t('onboarding.step3.stepIndicator')}
           </Text>
+          <Text style={styles.title}>{t('onboarding.step3.title')}</Text>
+          <Text style={styles.subtitle}>{t('onboarding.step3.subtitle')}</Text>
         </View>
 
         <View style={styles.optionsContainer}>
@@ -144,10 +150,10 @@ export default function OnboardingStep3() {
                     lookingFor === option.value && styles.optionLabelSelected,
                   ]}
                 >
-                  {option.label}
+                  {t(option.labelKey)}
                 </Text>
                 <Text style={styles.optionDescription}>
-                  {option.description}
+                  {t(option.descriptionKey)}
                 </Text>
               </View>
               <View
@@ -167,7 +173,7 @@ export default function OnboardingStep3() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
             <ChevronLeft size={24} color="#000" />
-            <Text style={styles.backButtonText}>Back</Text>
+            <Text style={styles.backButtonText}>{t('common.back')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -178,7 +184,7 @@ export default function OnboardingStep3() {
             onPress={handleNext}
             disabled={!isFormValid}
           >
-            <Text style={styles.nextButtonText}>Continue</Text>
+            <Text style={styles.nextButtonText}>{t('common.continue')}</Text>
             <ChevronRight size={24} color="#000" />
           </TouchableOpacity>
         </View>
@@ -190,6 +196,12 @@ export default function OnboardingStep3() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  languageSwitchContainer: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    zIndex: 100,
   },
   gridContainer: {
     position: 'absolute',

@@ -19,6 +19,7 @@ import Animated, {
 import * as Haptics from 'expo-haptics';
 import { Profile } from '@/types/Profile';
 import { Heart, MessageCircle } from 'lucide-react-native';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface MatchModalProps {
   visible: boolean;
@@ -34,6 +35,7 @@ export default function MatchModal({
   const scale = useSharedValue(0);
   const heartScale = useSharedValue(0);
   const opacity = useSharedValue(0);
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (visible) {
@@ -77,10 +79,10 @@ export default function MatchModal({
               <Heart size={60} color="#000" fill="#000" />
             </Animated.View>
 
-            <Text style={styles.matchText}>It's a Match!</Text>
+            <Text style={styles.matchText}>{t('matches.itsAMatch')}</Text>
 
             <Text style={styles.subtitle}>
-              You and {profile.name} have liked each other
+              {t('matches.youAndMatched', { name: profile.name })}
             </Text>
 
             <View style={styles.profileContainer}>
@@ -96,7 +98,9 @@ export default function MatchModal({
                 activeOpacity={0.8}
               >
                 <MessageCircle size={24} color="#fff" />
-                <Text style={styles.messageText}>Send Message</Text>
+                <Text style={styles.messageText}>
+                  {t('matches.sendMessage')}
+                </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -104,7 +108,9 @@ export default function MatchModal({
                 onPress={onClose}
                 activeOpacity={0.8}
               >
-                <Text style={styles.continueText}>Keep Swiping</Text>
+                <Text style={styles.continueText}>
+                  {t('matches.keepSwiping2')}
+                </Text>
               </TouchableOpacity>
             </View>
           </Animated.View>

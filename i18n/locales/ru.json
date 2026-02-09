@@ -1,0 +1,136 @@
+{
+  "common": {
+    "continue": "Продолжить",
+    "back": "Назад",
+    "cancel": "Отмена",
+    "remove": "Удалить",
+    "save": "Сохранить",
+    "edit": "Редактировать",
+    "done": "Готово",
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успех"
+  },
+  "auth": {
+    "appName": "Tulum",
+    "tagline": "нужное время, нужное место",
+    "welcomeBack": "С возвращением",
+    "createAccount": "Создать аккаунт",
+    "email": "Email",
+    "emailPlaceholder": "Введите email",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введите пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "confirmPasswordPlaceholder": "Подтвердите пароль",
+    "signIn": "Войти",
+    "signUp": "Регистрация",
+    "noAccount": "Нет аккаунта? Зарегистрируйтесь",
+    "hasAccount": "Уже есть аккаунт? Войдите",
+    "passwordsDoNotMatch": "Пароли не совпадают"
+  },
+  "onboarding": {
+    "step1": {
+      "stepIndicator": "Шаг 1 из 5",
+      "title": "Давайте познакомимся",
+      "subtitle": "Расскажите о себе",
+      "nameLabel": "Как вас зовут?",
+      "namePlaceholder": "Введите имя",
+      "ageLabel": "Сколько вам лет?",
+      "agePlaceholder": "Введите возраст",
+      "ageError": "Вам должно быть 18 лет или больше",
+      "genderLabel": "Ваш пол?"
+    },
+    "step2": {
+      "stepIndicator": "Шаг 2 из 5",
+      "title": "Добавьте фотографии",
+      "subtitle": "Добавьте хотя бы 1 фото для продолжения",
+      "hint": "Совет: Профили с большим количеством фото получают больше совпадений!",
+      "maxPhotosReached": "Достигнут максимум фотографий",
+      "maxPhotosMessage": "Можно добавить только {{count}} фотографий.",
+      "removePhoto": "Удалить фото",
+      "removePhotoConfirm": "Вы уверены, что хотите удалить это фото?",
+      "addPhoto": "Добавить фото",
+      "takePhoto": "Сделать фото",
+      "chooseFromLibrary": "Выбрать из галереи",
+      "permissionRequired": "Требуется разрешение",
+      "cameraPermission": "Пожалуйста, разрешите доступ к камере.",
+      "libraryPermission": "Пожалуйста, разрешите доступ к галерее.",
+      "main": "Главное"
+    },
+    "step3": {
+      "stepIndicator": "Шаг 3 из 5",
+      "title": "Что вы ищете?",
+      "subtitle": "Будьте честны, нет неправильного ответа"
+    },
+    "step4": {
+      "stepIndicator": "Шаг 4 из 5",
+      "title": "Ваши предпочтения",
+      "subtitle": "С кем вы хотите познакомиться?",
+      "showMe": "Показать мне",
+      "ageRange": "Возрастной диапазон",
+      "min": "Мин",
+      "max": "Макс",
+      "to": "до"
+    },
+    "step5": {
+      "stepIndicator": "Шаг 5 из 5",
+      "title": "Ваши интересы",
+      "subtitle": "Выберите минимум {{count}} хобби",
+      "getStarted": "Начать"
+    }
+  },
+  "gender": {
+    "male": "Мужской",
+    "female": "Женский",
+    "other": "Другой",
+    "men": "Мужчины",
+    "women": "Женщины"
+  },
+  "lookingFor": {
+    "relationship": "Отношения",
+    "relationshipDesc": "Ищу что-то серьёзное",
+    "casual": "Без обязательств",
+    "casualDesc": "Открыт(а) для разных вариантов",
+    "friendship": "Дружба",
+    "friendshipDesc": "Хочу найти новых друзей",
+    "notSure": "Пока не знаю",
+    "notSureDesc": "Ещё разбираюсь",
+    "party": "Тусовщик",
+    "partyDesc": "Просто хочу повеселиться"
+  },
+  "discover": {
+    "title": "Поиск",
+    "noMoreProfiles": "Больше нет профилей",
+    "checkBackLater": "Загляните позже за новыми людьми!",
+    "like": "НРАВИТСЯ",
+    "pass": "ПРОПУСТИТЬ",
+    "kmAway": "{{distance}} км"
+  },
+  "matches": {
+    "title": "Совпадения",
+    "newMatches": "Новые совпадения",
+    "messages": "Сообщения",
+    "noMatches": "Пока нет совпадений",
+    "keepSwiping": "Продолжайте свайпать, чтобы найти идеальную пару!",
+    "itsAMatch": "Совпадение!",
+    "youAndMatched": "Вы с {{name}} понравились друг другу",
+    "sendMessage": "Написать",
+    "keepSwiping2": "Продолжить поиск"
+  },
+  "profile": {
+    "title": "Мой профиль",
+    "editProfile": "Редактировать профиль",
+    "yearsOld": "{{age}} лет",
+    "lookingFor": "Ищу",
+    "aboutMe": "Обо мне",
+    "myInterests": "Мои интересы",
+    "myPhotos": "Мои фотографии"
+  },
+  "settings": {
+    "title": "Настройки",
+    "language": "Язык",
+    "notifications": "Уведомления",
+    "privacy": "Конфиденциальность",
+    "logout": "Выйти"
+  }
+}

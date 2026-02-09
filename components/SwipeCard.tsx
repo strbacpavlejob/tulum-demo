@@ -20,6 +20,7 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
 import { Profile } from '@/types/Profile';
 import { MapPin } from 'lucide-react-native';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const CARD_WIDTH = screenWidth * 0.9;
@@ -45,6 +46,7 @@ export default function SwipeCard({
   const translateY = useSharedValue(0);
   const rotateZ = useSharedValue(0);
   const scale = useSharedValue(1);
+  const { t } = useLanguage();
 
   const triggerHaptic = () => {
     if (Platform.OS !== 'web') {
@@ -151,11 +153,11 @@ export default function SwipeCard({
 
           {/* Swipe Indicators */}
           <Animated.View style={[styles.likeIndicator, likeOpacity]}>
-            <Text style={styles.likeText}>LIKE</Text>
+            <Text style={styles.likeText}>{t('discover.like')}</Text>
           </Animated.View>
 
           <Animated.View style={[styles.passIndicator, passOpacity]}>
-            <Text style={styles.passText}>PASS</Text>
+            <Text style={styles.passText}>{t('discover.pass')}</Text>
           </Animated.View>
 
           {/* Profile Info */}
@@ -173,7 +175,9 @@ export default function SwipeCard({
                 <View style={styles.distanceRow}>
                   <MapPin size={16} color="#fff" />
                   <Text style={styles.distance}>
-                    {profile.distance} km away
+                    {t('discover.kmAway', {
+                      distance: profile.distance.toString(),
+                    })}
                   </Text>
                 </View>
               )}

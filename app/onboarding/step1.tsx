@@ -16,6 +16,8 @@ import { useUserStore } from '@/stores/userStore';
 import { Gender } from '@/types/User';
 import { ChevronRight, Circle } from 'lucide-react-native';
 import { Mars, Venus } from 'lucide-react-native';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSwitch from '@/components/LanguageSwitch';
 
 const GENDER_OPTIONS: {
   value: Gender;
@@ -43,6 +45,7 @@ export default function OnboardingStep1() {
   const router = useRouter();
   const { onboardingData, updateOnboardingData, setOnboardingStep } =
     useUserStore();
+  const { t } = useLanguage();
 
   const [name, setName] = useState(onboardingData.name);
   const [age, setAge] = useState(onboardingData.age.toString());
@@ -99,6 +102,9 @@ export default function OnboardingStep1() {
   return (
     <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
       <GridBackground />
+      <View style={styles.languageSwitchContainer}>
+        <LanguageSwitch />
+      </View>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
@@ -108,17 +114,23 @@ export default function OnboardingStep1() {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.header}>
-            <Text style={styles.stepIndicator}>Step 1 of 5</Text>
-            <Text style={styles.title}>Let's get to know you</Text>
-            <Text style={styles.subtitle}>Tell us about yourself</Text>
+            <Text style={styles.stepIndicator}>
+              {t('onboarding.step1.stepIndicator')}
+            </Text>
+            <Text style={styles.title}>{t('onboarding.step1.title')}</Text>
+            <Text style={styles.subtitle}>
+              {t('onboarding.step1.subtitle')}
+            </Text>
           </View>
 
           <View style={styles.formContainer}>
             <View style={styles.inputContainer}>
-              <Text style={styles.label}>What's your name?</Text>
+              <Text style={styles.label}>
+                {t('onboarding.step1.nameLabel')}
+              </Text>
               <TextInput
                 style={styles.input}
-                placeholder="Enter your name"
+                placeholder={t('onboarding.step1.namePlaceholder')}
                 placeholderTextColor="#999"
                 value={name}
                 onChangeText={setName}
@@ -127,10 +139,10 @@ export default function OnboardingStep1() {
             </View>
 
             <View style={styles.inputContainer}>
-              <Text style={styles.label}>How old are you?</Text>
+              <Text style={styles.label}>{t('onboarding.step1.ageLabel')}</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Enter your age"
+                placeholder={t('onboarding.step1.agePlaceholder')}
                 placeholderTextColor="#999"
                 value={age}
                 onChangeText={(text) => setAge(text.replace(/[^0-9]/g, ''))}
@@ -138,12 +150,16 @@ export default function OnboardingStep1() {
                 maxLength={3}
               />
               {parseInt(age) < 18 && age.length > 0 && (
-                <Text style={styles.errorText}>You must be 18 or older</Text>
+                <Text style={styles.errorText}>
+                  {t('onboarding.step1.ageError')}
+                </Text>
               )}
             </View>
 
             <View style={styles.inputContainer}>
-              <Text style={styles.label}>What's your gender?</Text>
+              <Text style={styles.label}>
+                {t('onboarding.step1.genderLabel')}
+              </Text>
               <View style={styles.genderContainer}>
                 {GENDER_OPTIONS.map((option) => (
                   <TouchableOpacity
@@ -163,7 +179,7 @@ export default function OnboardingStep1() {
                         gender === option.value && styles.genderBoxTextSelected,
                       ]}
                     >
-                      {option.label}
+                      {t(`gender.${option.value}`)}
                     </Text>
                   </TouchableOpacity>
                 ))}
@@ -179,7 +195,7 @@ export default function OnboardingStep1() {
             onPress={handleNext}
             disabled={!isFormValid}
           >
-            <Text style={styles.nextButtonText}>Continue</Text>
+            <Text style={styles.nextButtonText}>{t('common.continue')}</Text>
             <ChevronRight size={24} color="#000" />
           </TouchableOpacity>
         </ScrollView>
@@ -191,6 +207,12 @@ export default function OnboardingStep1() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  languageSwitchContainer: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    zIndex: 100,
   },
   gridContainer: {
     position: 'absolute',

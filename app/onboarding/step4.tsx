@@ -18,25 +18,27 @@ import {
   Venus,
   CircleDot,
 } from 'lucide-react-native';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSwitch from '@/components/LanguageSwitch';
 
 const GENDER_OPTIONS: {
   value: Gender;
-  label: string;
+  labelKey: string;
   icon: (selected: boolean) => React.ReactNode;
 }[] = [
   {
     value: 'male',
-    label: 'Men',
+    labelKey: 'gender.men',
     icon: (selected) => <Mars size={32} color="#000" />,
   },
   {
     value: 'female',
-    label: 'Women',
+    labelKey: 'gender.women',
     icon: (selected) => <Venus size={32} color="#000" />,
   },
   {
     value: 'other',
-    label: 'Other',
+    labelKey: 'gender.other',
     icon: (selected) => <CircleDot size={32} color="#000" />,
   },
 ];
@@ -45,6 +47,7 @@ export default function OnboardingStep4() {
   const router = useRouter();
   const { onboardingData, updateOnboardingData, setOnboardingStep } =
     useUserStore();
+  const { t } = useLanguage();
 
   const [genderPreference, setGenderPreference] = useState<Gender[]>(
     onboardingData.preferences.genderPreference,
@@ -128,19 +131,26 @@ export default function OnboardingStep4() {
   return (
     <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
       <GridBackground />
+      <View style={styles.languageSwitchContainer}>
+        <LanguageSwitch />
+      </View>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.header}>
-          <Text style={styles.stepIndicator}>Step 4 of 5</Text>
-          <Text style={styles.title}>Your preferences</Text>
-          <Text style={styles.subtitle}>Who would you like to meet?</Text>
+          <Text style={styles.stepIndicator}>
+            {t('onboarding.step4.stepIndicator')}
+          </Text>
+          <Text style={styles.title}>{t('onboarding.step4.title')}</Text>
+          <Text style={styles.subtitle}>{t('onboarding.step4.subtitle')}</Text>
         </View>
 
         <View style={styles.formContainer}>
           <View style={styles.section}>
-            <Text style={styles.sectionLabel}>Show me</Text>
+            <Text style={styles.sectionLabel}>
+              {t('onboarding.step4.showMe')}
+            </Text>
             <View style={styles.genderContainer}>
               {GENDER_OPTIONS.map((option) => (
                 <TouchableOpacity
@@ -162,7 +172,7 @@ export default function OnboardingStep4() {
                         styles.genderBoxTextSelected,
                     ]}
                   >
-                    {option.label}
+                    {t(option.labelKey)}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -170,10 +180,14 @@ export default function OnboardingStep4() {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.sectionLabel}>Age range</Text>
+            <Text style={styles.sectionLabel}>
+              {t('onboarding.step4.ageRange')}
+            </Text>
             <View style={styles.rangeContainer}>
               <View style={styles.rangeItem}>
-                <Text style={styles.rangeLabel}>Min</Text>
+                <Text style={styles.rangeLabel}>
+                  {t('onboarding.step4.min')}
+                </Text>
                 <View style={styles.stepper}>
                   <TouchableOpacity
                     style={styles.stepperButton}
@@ -191,10 +205,14 @@ export default function OnboardingStep4() {
                 </View>
               </View>
 
-              <Text style={styles.rangeSeparator}>to</Text>
+              <Text style={styles.rangeSeparator}>
+                {t('onboarding.step4.to')}
+              </Text>
 
               <View style={styles.rangeItem}>
-                <Text style={styles.rangeLabel}>Max</Text>
+                <Text style={styles.rangeLabel}>
+                  {t('onboarding.step4.max')}
+                </Text>
                 <View style={styles.stepper}>
                   <TouchableOpacity
                     style={styles.stepperButton}
@@ -218,7 +236,7 @@ export default function OnboardingStep4() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
             <ChevronLeft size={24} color="#000" />
-            <Text style={styles.backButtonText}>Back</Text>
+            <Text style={styles.backButtonText}>{t('common.back')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -229,7 +247,7 @@ export default function OnboardingStep4() {
             onPress={handleNext}
             disabled={!isFormValid}
           >
-            <Text style={styles.nextButtonText}>Continue</Text>
+            <Text style={styles.nextButtonText}>{t('common.continue')}</Text>
             <ChevronRight size={24} color="#000" />
           </TouchableOpacity>
         </View>
@@ -241,6 +259,12 @@ export default function OnboardingStep4() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  languageSwitchContainer: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    zIndex: 100,
   },
   gridContainer: {
     position: 'absolute',

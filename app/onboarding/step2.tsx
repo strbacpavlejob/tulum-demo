@@ -21,6 +21,8 @@ import {
   X,
   Plus,
 } from 'lucide-react-native';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSwitch from '@/components/LanguageSwitch';
 
 const MAX_PHOTOS = 3;
 
@@ -28,13 +30,16 @@ export default function OnboardingStep2() {
   const router = useRouter();
   const { onboardingData, addPhoto, removePhoto, setOnboardingStep } =
     useUserStore();
+  const { t } = useLanguage();
   const photos = onboardingData.photos;
 
   const pickImage = async () => {
     if (photos.length >= MAX_PHOTOS) {
       Alert.alert(
-        'Maximum photos reached',
-        `You can only add up to ${MAX_PHOTOS} photos.`,
+        t('onboarding.step2.maxPhotosReached'),
+        t('onboarding.step2.maxPhotosMessage', {
+          count: MAX_PHOTOS.toString(),
+        }),
       );
       return;
     }
@@ -46,8 +51,8 @@ export default function OnboardingStep2() {
 
       if (!permissionResult.granted) {
         Alert.alert(
-          'Permission required',
-          'Please allow access to your photo library.',
+          t('onboarding.step2.permissionRequired'),
+          t('onboarding.step2.libraryPermission'),
         );
         return;
       }
@@ -68,8 +73,10 @@ export default function OnboardingStep2() {
   const takePhoto = async () => {
     if (photos.length >= MAX_PHOTOS) {
       Alert.alert(
-        'Maximum photos reached',
-        `You can only add up to ${MAX_PHOTOS} photos.`,
+        t('onboarding.step2.maxPhotosReached'),
+        t('onboarding.step2.maxPhotosMessage', {
+          count: MAX_PHOTOS.toString(),
+        }),
       );
       return;
     }
@@ -77,7 +84,10 @@ export default function OnboardingStep2() {
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
     if (!permissionResult.granted) {
-      Alert.alert('Permission required', 'Please allow access to your camera.');
+      Alert.alert(
+        t('onboarding.step2.permissionRequired'),
+        t('onboarding.step2.cameraPermission'),
+      );
       return;
     }
 
@@ -93,14 +103,18 @@ export default function OnboardingStep2() {
   };
 
   const handleRemovePhoto = (index: number) => {
-    Alert.alert('Remove Photo', 'Are you sure you want to remove this photo?', [
-      { text: 'Cancel', style: 'cancel' },
-      {
-        text: 'Remove',
-        style: 'destructive',
-        onPress: () => removePhoto(index),
-      },
-    ]);
+    Alert.alert(
+      t('onboarding.step2.removePhoto'),
+      t('onboarding.step2.removePhotoConfirm'),
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('common.remove'),
+          style: 'destructive',
+          onPress: () => removePhoto(index),
+        },
+      ],
+    );
   };
 
   const showImageOptions = () => {
@@ -110,10 +124,10 @@ export default function OnboardingStep2() {
       return;
     }
 
-    Alert.alert('Add Photo', 'Choose an option', [
-      { text: 'Take Photo', onPress: takePhoto },
-      { text: 'Choose from Library', onPress: pickImage },
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert(t('onboarding.step2.addPhoto'), '', [
+      { text: t('onboarding.step2.takePhoto'), onPress: takePhoto },
+      { text: t('onboarding.step2.chooseFromLibrary'), onPress: pickImage },
+      { text: t('common.cancel'), style: 'cancel' },
     ]);
   };
 
@@ -163,14 +177,19 @@ export default function OnboardingStep2() {
   return (
     <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
       <GridBackground />
+      <View style={styles.languageSwitchContainer}>
+        <LanguageSwitch />
+      </View>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.header}>
-          <Text style={styles.stepIndicator}>Step 2 of 5</Text>
-          <Text style={styles.title}>Add your photos</Text>
-          <Text style={styles.subtitle}>Add at least 1 photo to continue</Text>
+          <Text style={styles.stepIndicator}>
+            {t('onboarding.step2.stepIndicator')}
+          </Text>
+          <Text style={styles.title}>{t('onboarding.step2.title')}</Text>
+          <Text style={styles.subtitle}>{t('onboarding.step2.subtitle')}</Text>
         </View>
 
         <View style={styles.photoGrid}>
@@ -187,7 +206,9 @@ export default function OnboardingStep2() {
                   </TouchableOpacity>
                   {index === 0 && (
                     <View style={styles.mainBadge}>
-                      <Text style={styles.mainBadgeText}>Main</Text>
+                      <Text style={styles.mainBadgeText}>
+                        {t('onboarding.step2.main')}
+                      </Text>
                     </View>
                   )}
                 </View>
@@ -207,14 +228,12 @@ export default function OnboardingStep2() {
           ))}
         </View>
 
-        <Text style={styles.hint}>
-          Tip: Profiles with more photos get more matches!
-        </Text>
+        <Text style={styles.hint}>{t('onboarding.step2.hint')}</Text>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
             <ChevronLeft size={24} color="#000" />
-            <Text style={styles.backButtonText}>Back</Text>
+            <Text style={styles.backButtonText}>{t('common.back')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -225,7 +244,7 @@ export default function OnboardingStep2() {
             onPress={handleNext}
             disabled={!isFormValid}
           >
-            <Text style={styles.nextButtonText}>Continue</Text>
+            <Text style={styles.nextButtonText}>{t('common.continue')}</Text>
             <ChevronRight size={24} color="#000" />
           </TouchableOpacity>
         </View>
@@ -237,6 +256,12 @@ export default function OnboardingStep2() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  languageSwitchContainer: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    zIndex: 100,
   },
   gridContainer: {
     position: 'absolute',

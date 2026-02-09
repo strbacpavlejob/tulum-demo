@@ -15,6 +15,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Heart } from 'lucide-react-native';
 import { useAuthStore } from '@/stores/authStore';
 import { useRouter, Href } from 'expo-router';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSwitch from '@/components/LanguageSwitch';
 
 export default function AuthScreen() {
   const [isLogin, setIsLogin] = useState(true);
@@ -24,6 +26,7 @@ export default function AuthScreen() {
 
   const { login, register, status, error, clearError } = useAuthStore();
   const router = useRouter();
+  const { t } = useLanguage();
 
   const isLoading = status === 'loading';
 
@@ -91,6 +94,9 @@ export default function AuthScreen() {
   return (
     <LinearGradient colors={['#cebdff', '#cebdff']} style={styles.container}>
       <GridBackground />
+      <View style={styles.languageSwitchContainer}>
+        <LanguageSwitch />
+      </View>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
@@ -103,13 +109,13 @@ export default function AuthScreen() {
             <View style={styles.logoCircle}>
               <Heart size={48} color="#000" fill="#000" />
             </View>
-            <Text style={styles.appName}>Tulum</Text>
-            <Text style={styles.tagline}>right time, right place</Text>
+            <Text style={styles.appName}>{t('auth.appName')}</Text>
+            <Text style={styles.tagline}>{t('auth.tagline')}</Text>
           </View>
 
           <View style={styles.formContainer}>
             <Text style={styles.title}>
-              {isLogin ? 'Welcome Back' : 'Create Account'}
+              {isLogin ? t('auth.welcomeBack') : t('auth.createAccount')}
             </Text>
 
             {error && (
@@ -119,10 +125,10 @@ export default function AuthScreen() {
             )}
 
             <View style={styles.inputContainer}>
-              <Text style={styles.label}>Email</Text>
+              <Text style={styles.label}>{t('auth.email')}</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Enter your email"
+                placeholder={t('auth.emailPlaceholder')}
                 placeholderTextColor="#999"
                 value={email}
                 onChangeText={setEmail}
@@ -134,10 +140,10 @@ export default function AuthScreen() {
             </View>
 
             <View style={styles.inputContainer}>
-              <Text style={styles.label}>Password</Text>
+              <Text style={styles.label}>{t('auth.password')}</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Enter your password"
+                placeholder={t('auth.passwordPlaceholder')}
                 placeholderTextColor="#999"
                 value={password}
                 onChangeText={setPassword}
@@ -148,7 +154,7 @@ export default function AuthScreen() {
 
             {!isLogin && (
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Confirm Password</Text>
+                <Text style={styles.label}>{t('auth.confirmPassword')}</Text>
                 <TextInput
                   style={[
                     styles.input,
@@ -156,7 +162,7 @@ export default function AuthScreen() {
                       ? styles.inputError
                       : null,
                   ]}
-                  placeholder="Confirm your password"
+                  placeholder={t('auth.confirmPasswordPlaceholder')}
                   placeholderTextColor="#999"
                   value={confirmPassword}
                   onChangeText={setConfirmPassword}
@@ -164,7 +170,9 @@ export default function AuthScreen() {
                   editable={!isLoading}
                 />
                 {password !== confirmPassword && confirmPassword.length > 0 && (
-                  <Text style={styles.fieldError}>Passwords do not match</Text>
+                  <Text style={styles.fieldError}>
+                    {t('auth.passwordsDoNotMatch')}
+                  </Text>
                 )}
               </View>
             )}
@@ -181,16 +189,14 @@ export default function AuthScreen() {
                 <ActivityIndicator color="#fff" />
               ) : (
                 <Text style={styles.submitButtonText}>
-                  {isLogin ? 'Sign In' : 'Sign Up'}
+                  {isLogin ? t('auth.signIn') : t('auth.signUp')}
                 </Text>
               )}
             </TouchableOpacity>
 
             <TouchableOpacity onPress={toggleMode} disabled={isLoading}>
               <Text style={styles.toggleText}>
-                {isLogin
-                  ? "Don't have an account? Sign Up"
-                  : 'Already have an account? Sign In'}
+                {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -203,6 +209,12 @@ export default function AuthScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  languageSwitchContainer: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    zIndex: 100,
   },
   gridContainer: {
     position: 'absolute',
