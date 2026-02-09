@@ -20,14 +20,22 @@ import { Mars, Venus } from 'lucide-react-native';
 const GENDER_OPTIONS: {
   value: Gender;
   label: string;
-  icon: React.ReactNode;
+  icon: (selected: boolean) => React.ReactNode;
 }[] = [
-  { value: 'male', label: 'Male', icon: <Mars size={20} color="#000" /> },
-  { value: 'female', label: 'Female', icon: <Venus size={20} color="#000" /> },
+  {
+    value: 'male',
+    label: 'Male',
+    icon: (selected) => <Mars size={32} color={selected ? '#000' : '#000'} />,
+  },
+  {
+    value: 'female',
+    label: 'Female',
+    icon: (selected) => <Venus size={32} color={selected ? '#000' : '#000'} />,
+  },
   {
     value: 'other',
     label: 'Other',
-    icon: <Circle size={20} color="#000" />,
+    icon: (selected) => <Circle size={32} color={selected ? '#000' : '#000'} />,
   },
 ];
 
@@ -141,17 +149,18 @@ export default function OnboardingStep1() {
                   <TouchableOpacity
                     key={option.value}
                     style={[
-                      styles.genderButton,
-                      gender === option.value && styles.genderButtonSelected,
+                      styles.genderBox,
+                      gender === option.value && styles.genderBoxSelected,
                     ]}
                     onPress={() => setGender(option.value)}
                   >
-                    {option.icon}
+                    <View style={styles.genderIconContainer}>
+                      {option.icon(gender === option.value)}
+                    </View>
                     <Text
                       style={[
-                        styles.genderButtonText,
-                        gender === option.value &&
-                          styles.genderButtonTextSelected,
+                        styles.genderBoxText,
+                        gender === option.value && styles.genderBoxTextSelected,
                       ]}
                     >
                       {option.label}
@@ -284,16 +293,15 @@ const styles = StyleSheet.create({
   },
   genderContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    justifyContent: 'space-between',
     gap: 12,
   },
-  genderButton: {
-    flexDirection: 'row',
+  genderBox: {
+    flex: 1,
+    aspectRatio: 1,
     alignItems: 'center',
-    gap: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 50,
+    justifyContent: 'center',
+    borderRadius: 12,
     backgroundColor: '#fff',
     borderWidth: 3,
     borderColor: '#000',
@@ -303,17 +311,20 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 4,
   },
-  genderButtonSelected: {
+  genderBoxSelected: {
     backgroundColor: '#FFF9C4',
     borderColor: '#000',
   },
-  genderButtonText: {
-    fontSize: 14,
+  genderIconContainer: {
+    marginBottom: 8,
+  },
+  genderBoxText: {
+    fontSize: 12,
     fontWeight: '800',
     color: '#000',
     textTransform: 'uppercase',
   },
-  genderButtonTextSelected: {
+  genderBoxTextSelected: {
     color: '#000',
   },
   nextButton: {

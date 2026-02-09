@@ -11,16 +11,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  useAnimatedGestureHandler,
   runOnJS,
   interpolate,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import {
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
 import { Profile } from '@/types/Profile';
 import { MapPin } from 'lucide-react-native';
@@ -56,45 +52,57 @@ export default function SwipeCard({
     }
   };
 
-  const gestureHandler =
-    useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-      onStart: () => {
-        runOnJS(triggerHaptic)();
-      },
-      onActive: (event) => {
-        translateX.value = event.translationX;
-        translateY.value = event.translationY;
-        rotateZ.value = interpolate(
-          event.translationX,
-          [-screenWidth, 0, screenWidth],
-          [-30, 0, 30],
+  const panGesture = Gesture.Pan()
+    .onStart(() => {
+      runOnJS(triggerHaptic)();
+    })
+    .onUpdate((event) => {
+      translateX.value = event.translationX;
+      translateY.value = event.translationY;
+      rotateZ.value = interpolate(
+        event.translationX,
+        [-screenWidth, 0, screenWidth],
+        [-30, 0, 30],
+      );
+
+      // Scale effect for feedback
+      const progress = Math.abs(event.translationX) / SWIPE_THRESHOLD;
+      scale.value = interpolate(progress, [0, 1], [1, 0.95]);
+    })
+    .onEnd((event) => {
+      const shouldSwipeRight = event.translationX > SWIPE_THRESHOLD;
+      const shouldSwipeLeft = event.translationX < -SWIPE_THRESHOLD;
+
+      if (shouldSwipeRight) {
+        translateX.value = withTiming(
+          screenWidth * 1.5,
+          { duration: 300 },
+          (finished) => {
+            if (finished) {
+              runOnJS(onSwipeRight)(profile);
+            }
+          },
         );
-
-        // Scale effect for feedback
-        const progress = Math.abs(event.translationX) / SWIPE_THRESHOLD;
-        scale.value = interpolate(progress, [0, 1], [1, 0.95]);
-      },
-      onEnd: (event) => {
-        const shouldSwipeRight = event.translationX > SWIPE_THRESHOLD;
-        const shouldSwipeLeft = event.translationX < -SWIPE_THRESHOLD;
-
-        if (shouldSwipeRight) {
-          translateX.value = withTiming(screenWidth * 1.5);
-          rotateZ.value = withTiming(30);
-          runOnJS(onSwipeRight)(profile);
-          runOnJS(triggerHaptic)();
-        } else if (shouldSwipeLeft) {
-          translateX.value = withTiming(-screenWidth * 1.5);
-          rotateZ.value = withTiming(-30);
-          runOnJS(onSwipeLeft)(profile);
-          runOnJS(triggerHaptic)();
-        } else {
-          translateX.value = withSpring(0);
-          translateY.value = withSpring(0);
-          rotateZ.value = withSpring(0);
-          scale.value = withSpring(1);
-        }
-      },
+        rotateZ.value = withTiming(30, { duration: 300 });
+        runOnJS(triggerHaptic)();
+      } else if (shouldSwipeLeft) {
+        translateX.value = withTiming(
+          -screenWidth * 1.5,
+          { duration: 300 },
+          (finished) => {
+            if (finished) {
+              runOnJS(onSwipeLeft)(profile);
+            }
+          },
+        );
+        rotateZ.value = withTiming(-30, { duration: 300 });
+        runOnJS(triggerHaptic)();
+      } else {
+        translateX.value = withSpring(0);
+        translateY.value = withSpring(0);
+        rotateZ.value = withSpring(0);
+        scale.value = withSpring(1);
+      }
     });
 
   const cardStyle = useAnimatedStyle(() => {
@@ -135,7 +143,7 @@ export default function SwipeCard({
 
   return (
     <View style={styles.cardContainer}>
-      <PanGestureHandler onGestureEvent={gestureHandler}>
+      <GestureDetector gesture={panGesture}>
         <Animated.View
           style={[styles.card, cardStyle, index > 0 && cardScaleStyle]}
         >
@@ -176,7 +184,7 @@ export default function SwipeCard({
             </View>
           </LinearGradient>
         </Animated.View>
-      </PanGestureHandler>
+      </GestureDetector>
     </View>
   );
 }
@@ -206,6 +214,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+    resizeMode: 'cover',
   },
   gradient: {
     position: 'absolute',
