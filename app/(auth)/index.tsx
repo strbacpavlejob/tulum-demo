@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Heart } from 'lucide-react-native';
+import Logo from '@/components/Logo';
+import AppleIcon from '@/components/AppleIcon';
+import GoogleIcon from '@/components/GoogleIcon';
 import { useRouter, Href } from 'expo-router';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitch from '@/components/LanguageSwitch';
@@ -150,9 +153,7 @@ export default function AuthScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.logoContainer}>
-          <View style={styles.logoCircle}>
-            <Heart size={48} color="#000" fill="#000" />
-          </View>
+          <Logo width={96} height={96} style={styles.neoLogo} />
           <Text style={styles.appName}>{t('auth.appName')}</Text>
           <Text style={styles.tagline}>{t('auth.tagline')}</Text>
         </View>
@@ -175,15 +176,21 @@ export default function AuthScreen() {
             {isGoogleLoading ? (
               <ActivityIndicator color="#000" />
             ) : (
-              <>
-                <Image
-                  source={{ uri: 'https://www.google.com/favicon.ico' }}
-                  style={styles.ssoIcon}
-                />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '100%',
+                }}
+              >
+                <View style={styles.ssoIcon}>
+                  <GoogleIcon width={24} height={24} />
+                </View>
                 <Text style={styles.ssoButtonText}>
                   {t('auth.continueWithGoogle')}
                 </Text>
-              </>
+              </View>
             )}
           </TouchableOpacity>
 
@@ -196,14 +203,21 @@ export default function AuthScreen() {
             {isAppleLoading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '100%',
+                }}
+              >
                 <View style={styles.appleIconContainer}>
-                  <Text style={styles.appleIcon}></Text>
+                  <AppleIcon width={24} height={24} color="#fff" />
                 </View>
                 <Text style={[styles.ssoButtonText, styles.appleButtonText]}>
                   {t('auth.continueWithApple')}
                 </Text>
-              </>
+              </View>
             )}
           </TouchableOpacity>
 
@@ -263,20 +277,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 40,
   },
-  logoCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 12,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 3,
-    borderColor: '#000',
-    shadowColor: '#000',
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 8,
+  neoLogo: {
+    // Drop shadow is now handled in the SVG itself
   },
   appName: {
     fontSize: 42,
