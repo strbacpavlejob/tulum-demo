@@ -224,12 +224,10 @@ export default function AuthScreen() {
 
           <View style={styles.divider}>
             <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>{t('auth.orContinueWith')}</Text>
-            <View style={styles.dividerLine} />
           </View>
 
-          <Text style={styles.infoText}>
-            Sign in with your Google or Apple account to get started
+          <Text style={styles.termsText}>
+            {t('auth.termsAgreement')}
           </Text>
         </View>
       </ScrollView>
@@ -375,26 +373,18 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   divider: {
-    flexDirection: 'row',
-    alignItems: 'center',
     marginVertical: 20,
   },
   dividerLine: {
-    flex: 1,
     height: 2,
-    backgroundColor: '#ddd',
+    backgroundColor: '#000',
   },
-  dividerText: {
-    paddingHorizontal: 16,
-    fontSize: 12,
-    fontFamily: FONTS.bold,
-    color: '#999',
-    textTransform: 'uppercase',
-  },
-  infoText: {
+  termsText: {
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: 12,
     color: '#666',
     fontFamily: FONTS.semiBold,
+    marginTop: 16,
+    lineHeight: 18,
   },
 });

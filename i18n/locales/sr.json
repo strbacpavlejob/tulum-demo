@@ -29,7 +29,8 @@
     "passwordsDoNotMatch": "Lozinke se ne poklapaju",
     "orContinueWith": "ili nastavite sa",
     "continueWithGoogle": "Nastavi sa Google",
-    "continueWithApple": "Nastavi sa Apple"
+    "continueWithApple": "Nastavi sa Apple",
+    "termsAgreement": "Nastavljajući se slažete sa našim Uslovima korišćenja"
   },
   "onboarding": {
     "step1": {

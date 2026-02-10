@@ -29,7 +29,8 @@
     "passwordsDoNotMatch": "Пароли не совпадают",
     "orContinueWith": "или продолжить через",
     "continueWithGoogle": "Продолжить с Google",
-    "continueWithApple": "Продолжить с Apple"
+    "continueWithApple": "Продолжить с Apple",
+    "termsAgreement": "Продолжая, вы соглашаетесь с нашими Условиями использования"
   },
   "onboarding": {
     "step1": {

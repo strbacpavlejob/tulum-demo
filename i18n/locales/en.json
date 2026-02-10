@@ -29,7 +29,8 @@
     "passwordsDoNotMatch": "Passwords do not match",
     "orContinueWith": "or continue with",
     "continueWithGoogle": "Continue with Google",
-    "continueWithApple": "Continue with Apple"
+    "continueWithApple": "Continue with Apple",
+    "termsAgreement": "By continuing you agree to our Terms and Conditions"
   },
   "onboarding": {
     "step1": {
