@@ -226,9 +226,7 @@ export default function AuthScreen() {
             <View style={styles.dividerLine} />
           </View>
 
-          <Text style={styles.termsText}>
-            {t('auth.termsAgreement')}
-          </Text>
+          <Text style={styles.termsText}>{t('auth.termsAgreement')}</Text>
         </View>
       </ScrollView>
     </LinearGradient>
