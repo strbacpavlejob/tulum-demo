@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, Href } from 'expo-router';
 import { useUserStore } from '@/stores/userStore';
+import { useUser } from '@clerk/clerk-expo';
 import * as ImagePicker from 'expo-image-picker';
 import {
   ChevronRight,
@@ -32,7 +33,15 @@ export default function OnboardingStep2() {
   const { onboardingData, addPhoto, removePhoto, setOnboardingStep } =
     useUserStore();
   const { t } = useLanguage();
+  const { user } = useUser();
   const photos = onboardingData.photos;
+
+  // Initialize with Clerk profile photo if available and no photos added yet
+  useEffect(() => {
+    if (user?.imageUrl && photos.length === 0) {
+      addPhoto(user.imageUrl);
+    }
+  }, [user?.imageUrl]);
 
   const pickImage = async () => {
     if (photos.length >= MAX_PHOTOS) {
@@ -197,7 +206,18 @@ export default function OnboardingStep2() {
           {[...Array(MAX_PHOTOS)].map((_, index) => (
             <View key={index} style={styles.photoCell}>
               {photos[index] ? (
-                <View style={styles.photoContainer}>
+                <TouchableOpacity
+                  style={styles.photoContainer}
+                  onPress={() => {
+                    if (index === 0 && photos[index] === user?.imageUrl) {
+                      removePhoto(index);
+                      showImageOptions();
+                    }
+                  }}
+                  activeOpacity={
+                    index === 0 && photos[index] === user?.imageUrl ? 0.7 : 1
+                  }
+                >
                   <Image source={{ uri: photos[index] }} style={styles.photo} />
                   <TouchableOpacity
                     style={styles.removeButton}
@@ -212,7 +232,7 @@ export default function OnboardingStep2() {
                       </Text>
                     </View>
                   )}
-                </View>
+                </TouchableOpacity>
               ) : (
                 <TouchableOpacity
                   style={styles.addPhotoButton}

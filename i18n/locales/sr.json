@@ -34,10 +34,10 @@
   "onboarding": {
     "step1": {
       "stepIndicator": "Korak 1 od 5",
-      "title": "Hajde da se upoznamo",
+      "greeting": "Zdravo",
+      "title": "hajde da se upoznamo",
+      "titleDefault": "Hajde da se upoznamo",
       "subtitle": "Reci nam nešto o sebi",
-      "nameLabel": "Kako se zoveš?",
-      "namePlaceholder": "Unesi svoje ime",
       "ageLabel": "Koliko imaš godina?",
       "agePlaceholder": "Unesi svoje godine",
       "ageError": "Moraš imati 18 ili više godina",

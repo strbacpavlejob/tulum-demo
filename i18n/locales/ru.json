@@ -34,10 +34,10 @@
   "onboarding": {
     "step1": {
       "stepIndicator": "Шаг 1 из 5",
-      "title": "Давайте познакомимся",
+      "greeting": "Привет",
+      "title": "давайте познакомимся",
+      "titleDefault": "Давайте познакомимся",
       "subtitle": "Расскажите о себе",
-      "nameLabel": "Как вас зовут?",
-      "namePlaceholder": "Введите имя",
       "ageLabel": "Сколько вам лет?",
       "agePlaceholder": "Введите возраст",
       "ageError": "Вам должно быть 18 лет или больше",

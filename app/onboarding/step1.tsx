@@ -17,6 +17,7 @@ import { Gender } from '@/types/User';
 import { ChevronRight, Circle } from 'lucide-react-native';
 import { Mars, Venus } from 'lucide-react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useUser } from '@clerk/clerk-expo';
 import LanguageSwitch from '@/components/LanguageSwitch';
 import { FONTS } from '@/config/typography';
 
@@ -47,16 +48,14 @@ export default function OnboardingStep1() {
   const { onboardingData, updateOnboardingData, setOnboardingStep } =
     useUserStore();
   const { t } = useLanguage();
+  const { user } = useUser();
 
-  const [name, setName] = useState(onboardingData.name);
+  const firstName = user?.firstName || user?.fullName?.split(' ')[0] || '';
   const [age, setAge] = useState(onboardingData.age.toString());
   const [gender, setGender] = useState<Gender | null>(onboardingData.gender);
 
   const isFormValid =
-    name.trim().length >= 2 &&
-    parseInt(age) >= 18 &&
-    parseInt(age) <= 120 &&
-    gender !== null;
+    parseInt(age) >= 18 && parseInt(age) <= 120 && gender !== null;
 
   const GridBackground = () => {
     const { width, height } = Dimensions.get('window');
@@ -92,7 +91,7 @@ export default function OnboardingStep1() {
 
   const handleNext = () => {
     updateOnboardingData({
-      name: name.trim(),
+      name: firstName,
       age: parseInt(age),
       gender,
     });
@@ -118,27 +117,17 @@ export default function OnboardingStep1() {
             <Text style={styles.stepIndicator}>
               {t('onboarding.step1.stepIndicator')}
             </Text>
-            <Text style={styles.title}>{t('onboarding.step1.title')}</Text>
+            <Text style={styles.title}>
+              {firstName
+                ? `${t('onboarding.step1.greeting')} ${firstName}, ${t('onboarding.step1.title')}`
+                : t('onboarding.step1.titleDefault')}
+            </Text>
             <Text style={styles.subtitle}>
               {t('onboarding.step1.subtitle')}
             </Text>
           </View>
 
           <View style={styles.formContainer}>
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>
-                {t('onboarding.step1.nameLabel')}
-              </Text>
-              <TextInput
-                style={styles.input}
-                placeholder={t('onboarding.step1.namePlaceholder')}
-                placeholderTextColor="#999"
-                value={name}
-                onChangeText={setName}
-                autoCapitalize="words"
-              />
-            </View>
-
             <View style={styles.inputContainer}>
               <Text style={styles.label}>{t('onboarding.step1.ageLabel')}</Text>
               <TextInput

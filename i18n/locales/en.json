@@ -34,10 +34,10 @@
   "onboarding": {
     "step1": {
       "stepIndicator": "Step 1 of 5",
-      "title": "Let's get to know you",
+      "greeting": "Hi",
+      "title": "let's get to know you",
+      "titleDefault": "Let's get to know you",
       "subtitle": "Tell us about yourself",
-      "nameLabel": "What's your name?",
-      "namePlaceholder": "Enter your name",
       "ageLabel": "How old are you?",
       "agePlaceholder": "Enter your age",
       "ageError": "You must be 18 or older",
