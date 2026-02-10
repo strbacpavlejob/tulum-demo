@@ -11,6 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, Href } from 'expo-router';
 import { useUserStore } from '@/stores/userStore';
 import { useAuthStore } from '@/stores/authStore';
+import { useUser } from '@clerk/clerk-expo';
 import { AVAILABLE_HOBBIES } from '@/types/User';
 import { ChevronLeft, Check, Sparkles } from 'lucide-react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -23,14 +24,21 @@ export default function OnboardingStep5() {
   const router = useRouter();
   const { onboardingData, toggleHobby, completeOnboarding } = useUserStore();
   const { userId, email } = useAuthStore();
+  const { user } = useUser();
   const { t } = useLanguage();
   const selectedHobbies = onboardingData.hobbies;
 
   const handleComplete = () => {
-    if (userId && email) {
-      completeOnboarding(userId, email);
-      // Navigation is handled automatically by _layout.tsx after profile update
+    // Use Clerk user data as fallback if authStore is not set
+    const finalUserId = userId || user?.id;
+    const finalEmail = email || user?.primaryEmailAddress?.emailAddress;
+
+    if (finalUserId && finalEmail) {
+      completeOnboarding(finalUserId, finalEmail);
+      // Navigate immediately - AuthNavigator will handle redirection based on profile state
       router.replace('/(tabs)' as Href);
+    } else {
+      console.error('Missing user data:', { finalUserId, finalEmail });
     }
   };
 
