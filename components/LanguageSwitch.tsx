@@ -90,7 +90,6 @@ export default function LanguageSwitch({ style }: LanguageSwitchProps) {
       >
         <Pressable style={styles.overlay} onPress={() => setIsOpen(false)}>
           <View style={styles.dropdown}>
-            <Text style={styles.dropdownTitle}>Select Language</Text>
             {languages.map((lang) => (
               <TouchableOpacity
                 key={lang.code}
@@ -136,11 +135,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 3,
     borderColor: '#000',
-    shadowColor: '#000',
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 4,
     overflow: 'hidden',
   },
   flagIcon: {
@@ -170,17 +164,6 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 8,
   },
-  dropdownTitle: {
-    fontSize: 14,
-    fontFamily: FONTS.extraBold,
-    color: '#000',
-    textTransform: 'uppercase',
-    textAlign: 'center',
-    paddingVertical: 12,
-    borderBottomWidth: 2,
-    borderBottomColor: '#000',
-    marginBottom: 8,
-  },
   languageOption: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -191,12 +174,16 @@ const styles = StyleSheet.create({
   },
   languageOptionSelected: {
     backgroundColor: '#FFF9C4',
+    borderWidth: 2,
+    borderColor: '#000',
   },
   flagImage: {
     width: 32,
     height: 32,
     borderRadius: 16,
     marginRight: 14,
+    borderWidth: 2,
+    borderColor: '#000',
   },
   languageLabel: {
     fontSize: 16,
