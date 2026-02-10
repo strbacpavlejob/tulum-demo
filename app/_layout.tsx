@@ -10,6 +10,21 @@ import { useUserStore } from '@/stores/userStore';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { tokenCache } from '@/lib/tokenCache';
 import { CLERK_PUBLISHABLE_KEY } from '@/config/clerk';
+import {
+  useFonts,
+  Sora_100Thin,
+  Sora_200ExtraLight,
+  Sora_300Light,
+  Sora_400Regular,
+  Sora_500Medium,
+  Sora_600SemiBold,
+  Sora_700Bold,
+  Sora_800ExtraBold,
+} from '@expo-google-fonts/sora';
+import * as SplashScreen from 'expo-splash-screen';
+
+// Prevent splash screen from auto-hiding
+SplashScreen.preventAutoHideAsync();
 
 function AuthNavigator() {
   const router = useRouter();
@@ -34,6 +49,12 @@ function AuthNavigator() {
     const inOnboarding = (segments[0] as string) === 'onboarding';
     const inTabsGroup = (segments[0] as string) === '(tabs)';
 
+    console.log('Navigation check:', {
+      isSignedIn,
+      onboardingCompleted: profile?.onboardingCompleted,
+      currentSegment: segments[0],
+    });
+
     if (!isSignedIn) {
       // Not authenticated, redirect to auth
       logout();
@@ -48,16 +69,46 @@ function AuthNavigator() {
     } else {
       // Authenticated and onboarding complete
       if (!inTabsGroup) {
+        console.log('Navigating to tabs after onboarding complete');
         router.replace('/(tabs)' as Href);
       }
     }
-  }, [isSignedIn, isLoaded, profile, segments, isNavigationReady]);
+  }, [
+    isSignedIn,
+    isLoaded,
+    profile,
+    segments,
+    isNavigationReady,
+    router,
+    logout,
+  ]);
 
   return null;
 }
 
 export default function RootLayout() {
   useFrameworkReady();
+
+  const [fontsLoaded, fontError] = useFonts({
+    Sora_100Thin,
+    Sora_200ExtraLight,
+    Sora_300Light,
+    Sora_400Regular,
+    Sora_500Medium,
+    Sora_600SemiBold,
+    Sora_700Bold,
+    Sora_800ExtraBold,
+  });
+
+  useEffect(() => {
+    if (fontsLoaded || fontError) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
 
   return (
     <ClerkProvider

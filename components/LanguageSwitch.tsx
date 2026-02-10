@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Check } from 'lucide-react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { FONTS } from '@/config/typography';
 
 const languages = [
   {
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
   },
   dropdownTitle: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     textTransform: 'uppercase',
     textAlign: 'center',
@@ -199,12 +200,12 @@ const styles = StyleSheet.create({
   },
   languageLabel: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: FONTS.semiBold,
     color: '#000',
     flex: 1,
   },
   languageLabelSelected: {
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
   },
   checkIcon: {
     marginLeft: 8,

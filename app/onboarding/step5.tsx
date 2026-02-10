@@ -15,6 +15,7 @@ import { AVAILABLE_HOBBIES } from '@/types/User';
 import { ChevronLeft, Check, Sparkles } from 'lucide-react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitch from '@/components/LanguageSwitch';
+import { FONTS } from '@/config/typography';
 
 const MIN_HOBBIES = 3;
 
@@ -28,6 +29,7 @@ export default function OnboardingStep5() {
   const handleComplete = () => {
     if (userId && email) {
       completeOnboarding(userId, email);
+      // Navigation is handled automatically by _layout.tsx after profile update
       router.replace('/(tabs)' as Href);
     }
   };
@@ -197,7 +199,7 @@ const styles = StyleSheet.create({
   },
   stepIndicator: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     marginBottom: 8,
     textTransform: 'uppercase',
@@ -207,7 +209,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     marginBottom: 8,
     textShadowColor: '#000',
@@ -216,7 +218,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#fff',
     textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
@@ -253,7 +255,7 @@ const styles = StyleSheet.create({
   },
   hobbyText: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     textTransform: 'uppercase',
   },
@@ -265,7 +267,7 @@ const styles = StyleSheet.create({
   },
   countText: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     textAlign: 'center',
     textShadowColor: '#000',
@@ -273,7 +275,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 0,
   },
   countHint: {
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#fff',
   },
   buttonContainer: {
@@ -301,7 +303,7 @@ const styles = StyleSheet.create({
   backButtonText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     textTransform: 'uppercase',
   },
   completeButton: {
@@ -328,7 +330,7 @@ const styles = StyleSheet.create({
   completeButtonText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     textTransform: 'uppercase',
   },
 });

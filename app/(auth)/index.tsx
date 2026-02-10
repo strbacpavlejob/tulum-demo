@@ -9,6 +9,7 @@ import {
   Dimensions,
   Image,
 } from 'react-native';
+import { FONTS } from '@/config/typography';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Heart } from 'lucide-react-native';
 import Logo from '@/components/Logo';
@@ -282,7 +283,7 @@ const styles = StyleSheet.create({
   },
   appName: {
     fontSize: 42,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     marginTop: 16,
     textTransform: 'uppercase',
@@ -293,7 +294,7 @@ const styles = StyleSheet.create({
   },
   tagline: {
     fontSize: 16,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginTop: 8,
   },
@@ -311,7 +312,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     textAlign: 'center',
     marginBottom: 24,
@@ -329,7 +330,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
   },
   ssoButton: {
     flexDirection: 'row',
@@ -366,7 +367,7 @@ const styles = StyleSheet.create({
   },
   ssoButtonText: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     textTransform: 'uppercase',
   },
@@ -386,7 +387,7 @@ const styles = StyleSheet.create({
   dividerText: {
     paddingHorizontal: 16,
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#999',
     textTransform: 'uppercase',
   },
@@ -394,6 +395,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 14,
     color: '#666',
-    fontWeight: '600',
+    fontFamily: FONTS.semiBold,
   },
 });

@@ -11,6 +11,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MessageCircle, Heart } from 'lucide-react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { FONTS } from '@/config/typography';
 
 const matches = [
   {
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     textTransform: 'uppercase',
     textShadowColor: '#000',
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginBottom: 16,
     textTransform: 'uppercase',
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
   },
   newMatchName: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     textTransform: 'uppercase',
   },
@@ -200,18 +201,18 @@ const styles = StyleSheet.create({
   },
   messageName: {
     fontSize: 16,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     textTransform: 'uppercase',
   },
   messageTime: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#000',
   },
   messageText: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: FONTS.semiBold,
     color: '#333',
   },
   emptyState: {
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 24,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginTop: 16,
     marginBottom: 8,
@@ -229,7 +230,7 @@ const styles = StyleSheet.create({
   },
   emptySubtitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: FONTS.semiBold,
     color: '#333',
     textAlign: 'center',
     lineHeight: 24,

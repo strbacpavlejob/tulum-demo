@@ -22,6 +22,7 @@ import {
 } from 'lucide-react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitch from '@/components/LanguageSwitch';
+import { FONTS } from '@/config/typography';
 
 const LOOKING_FOR_OPTIONS: {
   value: LookingFor;
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
   },
   stepIndicator: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     marginBottom: 8,
     textTransform: 'uppercase',
@@ -245,7 +246,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     marginBottom: 8,
     textShadowColor: '#000',
@@ -254,7 +255,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#fff',
     textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
@@ -294,7 +295,7 @@ const styles = StyleSheet.create({
   },
   optionLabel: {
     fontSize: 18,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginBottom: 4,
     textTransform: 'uppercase',
@@ -304,7 +305,7 @@ const styles = StyleSheet.create({
   },
   optionDescription: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: FONTS.semiBold,
     color: '#333',
   },
   radioButton: {
@@ -352,7 +353,7 @@ const styles = StyleSheet.create({
   backButtonText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     textTransform: 'uppercase',
   },
   nextButton: {
@@ -379,7 +380,7 @@ const styles = StyleSheet.create({
   nextButtonText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     textTransform: 'uppercase',
   },
 });

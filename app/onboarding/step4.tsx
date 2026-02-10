@@ -20,6 +20,7 @@ import {
 } from 'lucide-react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitch from '@/components/LanguageSwitch';
+import { FONTS } from '@/config/typography';
 
 const GENDER_OPTIONS: {
   value: Gender;
@@ -298,7 +299,7 @@ const styles = StyleSheet.create({
   },
   stepIndicator: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     marginBottom: 8,
     textTransform: 'uppercase',
@@ -308,7 +309,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     marginBottom: 8,
     textShadowColor: '#000',
@@ -317,7 +318,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#fff',
     textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
@@ -341,7 +342,7 @@ const styles = StyleSheet.create({
   },
   sectionLabel: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginBottom: 12,
     textTransform: 'uppercase',
@@ -375,7 +376,7 @@ const styles = StyleSheet.create({
   },
   genderBoxText: {
     fontSize: 12,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     textTransform: 'uppercase',
   },
@@ -392,14 +393,14 @@ const styles = StyleSheet.create({
   },
   rangeLabel: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#000',
     marginBottom: 8,
     textTransform: 'uppercase',
   },
   rangeSeparator: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginHorizontal: 20,
   },
@@ -424,12 +425,12 @@ const styles = StyleSheet.create({
   },
   stepperButtonText: {
     fontSize: 24,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
   },
   stepperValue: {
     fontSize: 20,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     minWidth: 50,
     textAlign: 'center',
@@ -445,12 +446,12 @@ const styles = StyleSheet.create({
   },
   distanceNumber: {
     fontSize: 32,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
   },
   distanceUnit: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#000',
     textTransform: 'uppercase',
   },
@@ -479,7 +480,7 @@ const styles = StyleSheet.create({
   backButtonText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     textTransform: 'uppercase',
   },
   nextButton: {
@@ -506,7 +507,7 @@ const styles = StyleSheet.create({
   nextButtonText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     textTransform: 'uppercase',
   },
 });

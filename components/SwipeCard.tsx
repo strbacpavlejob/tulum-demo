@@ -21,6 +21,7 @@ import * as Haptics from 'expo-haptics';
 import { Profile } from '@/types/Profile';
 import { MapPin } from 'lucide-react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { FONTS } from '@/config/typography';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const CARD_WIDTH = screenWidth * 0.9;
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 28,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     textShadowColor: '#000',
     textShadowOffset: { width: 2, height: 2 },
@@ -247,7 +248,7 @@ const styles = StyleSheet.create({
   },
   age: {
     fontSize: 28,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#fff',
     textShadowColor: '#000',
     textShadowOffset: { width: 2, height: 2 },
@@ -260,7 +261,7 @@ const styles = StyleSheet.create({
   },
   distance: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#fff',
     marginLeft: 4,
     textShadowColor: '#000',
@@ -269,7 +270,7 @@ const styles = StyleSheet.create({
   },
   bio: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: FONTS.semiBold,
     color: '#fff',
     lineHeight: 22,
     textShadowColor: '#000',
@@ -291,7 +292,7 @@ const styles = StyleSheet.create({
   likeText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     textTransform: 'uppercase',
   },
   passIndicator: {
@@ -309,7 +310,7 @@ const styles = StyleSheet.create({
   passText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     textTransform: 'uppercase',
   },
 });

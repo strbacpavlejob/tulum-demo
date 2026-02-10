@@ -20,6 +20,7 @@ import * as Haptics from 'expo-haptics';
 import { Profile } from '@/types/Profile';
 import { Heart, MessageCircle } from 'lucide-react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { FONTS } from '@/config/typography';
 
 interface MatchModalProps {
   visible: boolean;
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
   },
   matchText: {
     fontSize: 42,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginBottom: 10,
     textAlign: 'center',
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
     opacity: 1,
     textAlign: 'center',
     marginBottom: 40,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
   },
   profileContainer: {
     marginBottom: 40,
@@ -187,7 +188,7 @@ const styles = StyleSheet.create({
   messageText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     marginLeft: 8,
     textTransform: 'uppercase',
   },
@@ -207,7 +208,7 @@ const styles = StyleSheet.create({
   continueText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     textTransform: 'uppercase',
   },
 });

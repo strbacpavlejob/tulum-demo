@@ -18,6 +18,7 @@ import { ChevronRight, Circle } from 'lucide-react-native';
 import { Mars, Venus } from 'lucide-react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitch from '@/components/LanguageSwitch';
+import { FONTS } from '@/config/typography';
 
 const GENDER_OPTIONS: {
   value: Gender;
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
   },
   stepIndicator: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     marginBottom: 8,
     textTransform: 'uppercase',
@@ -259,7 +260,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     marginBottom: 8,
     textShadowColor: '#000',
@@ -268,7 +269,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#fff',
     textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
@@ -292,7 +293,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginBottom: 12,
     textTransform: 'uppercase',
@@ -305,13 +306,13 @@ const styles = StyleSheet.create({
     color: '#000',
     borderWidth: 3,
     borderColor: '#000',
-    fontWeight: '600',
+    fontFamily: FONTS.semiBold,
   },
   errorText: {
     color: '#FF4444',
     fontSize: 12,
     marginTop: 8,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
   },
   genderContainer: {
     flexDirection: 'row',
@@ -342,7 +343,7 @@ const styles = StyleSheet.create({
   },
   genderBoxText: {
     fontSize: 12,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     textTransform: 'uppercase',
   },
@@ -372,7 +373,7 @@ const styles = StyleSheet.create({
   nextButtonText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     textTransform: 'uppercase',
   },
 });

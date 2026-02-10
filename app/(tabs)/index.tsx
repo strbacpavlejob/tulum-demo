@@ -8,6 +8,7 @@ import { mockProfiles } from '@/data/profiles';
 import { Profile } from '@/types/Profile';
 import { Settings } from 'lucide-react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { FONTS } from '@/config/typography';
 
 export default function DiscoverScreen() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -201,9 +202,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     fontSize: 32,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
-    fontFamily: 'System',
     textTransform: 'uppercase',
   },
   cardStack: {
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 28,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     textAlign: 'center',
     marginBottom: 16,
@@ -231,6 +231,6 @@ const styles = StyleSheet.create({
     opacity: 1,
     textAlign: 'center',
     lineHeight: 26,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
   },
 });

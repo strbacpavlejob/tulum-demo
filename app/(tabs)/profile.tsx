@@ -21,6 +21,7 @@ import { useUserStore } from '@/stores/userStore';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useClerk } from '@clerk/clerk-expo';
 import { useAuthStore } from '@/stores/authStore';
+import { FONTS } from '@/config/typography';
 
 export default function ProfileScreen() {
   const { profile, onboardingData, resetOnboarding } = useUserStore();
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     textTransform: 'uppercase',
     textShadowColor: '#000',
@@ -220,14 +221,14 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 28,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginBottom: 4,
     textTransform: 'uppercase',
   },
   age: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#333',
     marginBottom: 16,
   },
@@ -248,7 +249,7 @@ const styles = StyleSheet.create({
   },
   editText: {
     color: '#000',
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     marginLeft: 8,
     textTransform: 'uppercase',
   },
@@ -272,14 +273,14 @@ const styles = StyleSheet.create({
   },
   infoTitle: {
     fontSize: 12,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginBottom: 4,
     textTransform: 'uppercase',
   },
   infoValue: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: FONTS.bold,
     color: '#333',
   },
   bioSection: {
@@ -288,14 +289,14 @@ const styles = StyleSheet.create({
   },
   bioTitle: {
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginBottom: 12,
     textTransform: 'uppercase',
   },
   bioText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: FONTS.semiBold,
     color: '#333',
     lineHeight: 24,
   },
@@ -305,7 +306,7 @@ const styles = StyleSheet.create({
   },
   photosTitle: {
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginBottom: 16,
     textTransform: 'uppercase',
@@ -337,7 +338,7 @@ const styles = StyleSheet.create({
   addPhotoText: {
     fontSize: 32,
     color: '#000',
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
   },
   placeholderImage: {
     backgroundColor: '#f0f0f0',
@@ -350,7 +351,7 @@ const styles = StyleSheet.create({
   },
   hobbiesTitle: {
     fontSize: 18,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#000',
     marginBottom: 16,
     textTransform: 'uppercase',
@@ -378,7 +379,7 @@ const styles = StyleSheet.create({
   },
   hobbyText: {
     fontSize: 14,
-    fontWeight: '800',
+    fontFamily: FONTS.extraBold,
     color: '#000',
   },
   signOutButton: {
@@ -402,7 +403,7 @@ const styles = StyleSheet.create({
   },
   signOutText: {
     fontSize: 16,
-    fontWeight: '900',
+    fontFamily: FONTS.extraBold,
     color: '#fff',
     textTransform: 'uppercase',
   },
